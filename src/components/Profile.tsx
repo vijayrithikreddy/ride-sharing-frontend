@@ -2,21 +2,15 @@ import React, { useState } from "react";
 import PersonalDetails from "./PersonalDetails";
 import ProfileDetails from "./ProfileDetails";
 import ProfileReview from "./ProfileReview";
+import type { UserProfileDto } from "../interfaces/UserProfileDto";
+import { updateProfileData } from "../service/UserService";
+import { useNavigate } from "react-router-dom";
 
-export interface UserProfileDto {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  dateOfBirth: string;
-  gender: "MALE" | "FEMALE" | "OTHER";
-  occupation: string;
-  organization: string;
-  profilePictureUrl: string;
-  bio: string;
-}
+
 
 function Profile() {
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<UserProfileDto>({
     firstName: "",
@@ -38,8 +32,8 @@ function Profile() {
     console.log("Profile Data:", formData);
     console.log("Selected Image:", selectedImage);
 
-    // TODO:
-    // Create FormData and send to Spring Boot
+    updateProfileData(formData,selectedImage);
+    navigate("/roleselection")
   };
 
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import type { UserProfileDto } from "./Profile";
-import DefaultAvatar from "./images/defaultavatar.png";
+import DefaultAvatar from "../images/defaultavatar.png";
 
 interface ProfileDetailsProps {
   step: number;
