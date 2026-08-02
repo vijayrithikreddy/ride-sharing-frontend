@@ -1,0 +1,76 @@
+/* ===========================================
+   Google Places Autocomplete
+=========================================== */
+
+.pac-container {
+    margin-top: 8px;
+    border: none;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    font-family: inherit;
+    z-index: 99999 !important;
+}
+
+/* Each suggestion */
+
+.pac-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-top: 1px solid #f3f4f6;
+    font-size: 14px;
+    line-height: 1.5;
+    transition: background-color 0.2s ease;
+}
+
+/* Remove first border */
+
+.pac-item:first-child {
+    border-top: none;
+}
+
+/* Hover */
+
+.pac-item:hover {
+    background-color: #eff6ff;
+}
+
+/* Selected using keyboard */
+
+.pac-item-selected {
+    background-color: #dbeafe !important;
+}
+
+/* Main place name */
+
+.pac-item-query {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* Secondary address */
+
+.pac-matched {
+    font-weight: 700;
+    color: #2563eb;
+}
+
+/* Google icon */
+
+.pac-icon {
+    margin-right: 10px;
+}
+
+/* Powered by Google */
+
+.pac-logo:after {
+    display: none;
+}
+
+/* Prevent Tailwind conflicts */
+
+.pac-container * {
+    box-sizing: border-box;
+}
