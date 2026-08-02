@@ -1,78 +1,77 @@
-import { FaArrowRight, FaMotorcycle } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import GoogleMapView from "./GoogleMapView";
 import NavBar from "./NavBar";
+import WelcomeCard from "./WelcomeCard";
+import PublishRideCard from "./PublishRideCard";
+
+type Step = "welcome" | "publish";
+
+export interface Location {
+  address: string;
+  lat: number;
+  lng: number;
+}
 
 function Home() {
+  const [step, setStep] = useState<Step>("welcome");
 
-    const navigate = useNavigate();
+  const [pickup, setPickup] = useState<Location | null>(null);
 
-    return (
+  const [destination, setDestination] = useState<Location | null>(null);
+  const [encodedPolyline, setEncodedPolyline] = useState("");
 
-        <div className="h-screen flex flex-col bg-gray-100">
+  const [selecting, setSelecting] = useState<"pickup" | "destination" | null>(null);
 
-            <NavBar />
+  return (
+    <div className="h-screen flex flex-col bg-gray-100">
 
-            <div className="relative flex-1">
+      <NavBar />
 
-                {/* Google Map */}
+      <div className="relative flex-1">
+        {selecting && (
+    <div className="absolute top-5 left-1/2 -translate-x-1/2 z-50">
 
-                <GoogleMapView />
+        <div className="bg-blue-600 text-white px-6 py-3 rounded-full shadow-xl">
 
-                {/* Floating Card */}
-
-                <div className="absolute top-10 left-10 w-[400px]">
-
-                    <div className="bg-white rounded-3xl shadow-2xl p-8">
-
-                        <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center">
-
-                            <FaMotorcycle
-                                size={30}
-                                className="text-blue-600"
-                            />
-
-                        </div>
-
-                        <h1 className="text-3xl font-bold mt-6">
-
-                            Hello Vijay 👋
-
-                        </h1>
-
-                        <p className="text-gray-500 mt-4 leading-7">
-
-                            Ready to share your ride today?
-
-                            Publish your ride and help students
-                            travelling on the same route.
-
-                        </p>
-
-                        <button
-
-                            onClick={() => navigate("/publishride")}
-
-                            className="mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl flex justify-center items-center gap-3 font-semibold"
-
-                        >
-
-                            Publish Ride
-
-                            <FaArrowRight />
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
+            {selecting === "pickup"
+                ? "📍 Click on the map to select Pickup"
+                : "📍 Click on the map to select Destination"}
 
         </div>
 
-    );
+    </div>
+)}
+        <GoogleMapView
+          pickup={pickup}
+          destination={destination}
+          setPickup={setPickup}
+          setDestination={setDestination}
+          selecting={selecting}
+          setSelecting={setSelecting}
+          setEncodedPolyline={setEncodedPolyline}
+        />
 
+        {step === "welcome" && (
+          <WelcomeCard setStep={setStep} />
+        )}
+
+        {step === "publish" && (
+          <PublishRideCard
+            setStep={setStep}
+            pickup={pickup}
+            destination={destination}
+            setPickup={setPickup}
+            setDestination={setDestination}
+            selecting={selecting}
+            setSelecting={setSelecting}
+            encodedPolyline={encodedPolyline}
+          />
+        )}
+
+      </div>
+
+    </div>
+  );
 }
 
 export default Home;
