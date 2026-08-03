@@ -1,5 +1,5 @@
 import { Autocomplete } from "@react-google-maps/api";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   FaArrowLeft,
   FaLocationArrow,
@@ -11,6 +11,8 @@ import "../styles/google.css";
 import type { Location } from "../interfaces/Location.ts";
 import { publishRide } from "../service/RideService.ts";
 import type { CreateRideRequest } from "../interfaces/CreateRideRequest.ts";
+import { RideContext } from "../context/RideContext.ts";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -48,6 +50,8 @@ function PublishRideCard({
   setSelecting,
   encodedPolyline
 }: PublishRideCardProps) {
+  const {setActiveRide} = useContext(RideContext);
+  const navigate = useNavigate();
  
   const [hour, setHour] = useState("10");
 const [minute, setMinute] = useState("30");
@@ -76,7 +80,7 @@ useEffect(() => {
   setDestinationInput(destination?.address ?? "");
 }, [destination]);
 
-  const handlePublishRide = () => {
+  const handlePublishRide = async () => {
 
   if (!pickup) {
     alert("Please select the pickup location.");
@@ -135,10 +139,10 @@ useEffect(() => {
 
   console.log("Publish Ride Request");
   console.log(request);
-  publishRide(request);
-
-  // Example:
-  // await RideService.publishRide(request);
+  const response = await publishRide(request);
+  setActiveRide(response);
+  navigate("/dashboard")
+  
 
 };
 

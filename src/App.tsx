@@ -7,6 +7,7 @@ import Profile from "./components/Profile";
 import Home from "./components/Home";
 import PassengerHome from "./components/PassengerHome";
 import RoleSelection from "./components/RoleSelection";
+import DashBoard from "./components/DashBoard";
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
         <Route path="/createprofile" element={<Profile/>}></Route>
         <Route path="/passengerhome" element={<PassengerHome />} />
         <Route path="/roleselection" element={<RoleSelection />} />
+        <Route path="/dashboard" element={<DashBoard />} />
+
 
         
 
