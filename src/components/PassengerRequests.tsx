@@ -1,20 +1,15 @@
-import {
-  FaCheck,
-  FaMapMarkerAlt,
-  FaTimes,
-  FaUserCircle,
-} from "react-icons/fa";
-
-export interface RideRequest {
-  requestId: number;
-  passengerName: string;
-  pickupAddress: string;
-  destinationAddress: string;
-  matchPercentage: number;
-}
+import type { Dispatch, SetStateAction } from "react";
+import type { RideRequestResponse } from "../interfaces/RideRequestResponse";
+import PassengerRequestCard from "./PassengerRequestCard";
 
 interface RideRequestsProps {
-  requests: RideRequest[];
+  requests: RideRequestResponse[];
+
+  selectedRequest: RideRequestResponse | null;
+
+  setSelectedRequest: Dispatch<
+    SetStateAction<RideRequestResponse | null>
+  >;
 
   onAccept: (requestId: number) => void;
 
@@ -23,155 +18,96 @@ interface RideRequestsProps {
 
 function PassengerRequests({
   requests,
+  selectedRequest,
+  setSelectedRequest,
   onAccept,
   onReject,
 }: RideRequestsProps) {
-
   return (
-    <div className="bg-white rounded-3xl shadow-xl p-6">
+    <div className="bg-white rounded-3xl shadow-xl p-6 h-fit">
 
-      <div className="flex justify-between items-center">
+      {/* Header */}
 
-        <h2 className="text-2xl font-bold text-gray-800">
-          Ride Requests
-        </h2>
+      <div className="flex justify-between items-center mb-6">
 
-        <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+        <div>
+
+          <h2 className="text-2xl font-bold text-gray-800">
+            Ride Requests
+          </h2>
+
+          <p className="text-sm text-gray-500 mt-1">
+            Review passenger requests for your ride.
+          </p>
+
+        </div>
+
+        <div className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+
           {requests.length} Pending
-        </span>
+
+        </div>
 
       </div>
 
+      {/* Empty State */}
+
       {requests.length === 0 ? (
 
-        <div className="py-16 text-center">
+        <div className="h-64 flex flex-col justify-center items-center">
 
-          <FaUserCircle
-            className="mx-auto text-gray-300"
-            size={70}
+          <img
+            src="/empty-state.svg"
+            alt=""
+            className="w-28 opacity-50"
           />
 
-          <h3 className="mt-4 text-xl font-semibold text-gray-700">
-            No Ride Requests
+          <h3 className="text-xl font-semibold text-gray-700 mt-5">
+
+            No Requests Yet
+
           </h3>
 
           <p className="text-gray-500 mt-2">
+
             Passenger requests will appear here.
+
           </p>
 
         </div>
 
       ) : (
 
-        <div className="mt-6 space-y-5">
+        <div className="space-y-4">
 
           {requests.map((request) => (
 
-            <div
+            <PassengerRequestCard
               key={request.requestId}
-              className="border rounded-2xl p-5 hover:shadow-lg transition"
-            >
+              request={request}
+              expanded={
+                selectedRequest?.requestId ===
+                request.requestId
+              }
+              onClick={() => {
 
-              <div className="flex justify-between">
+                if (
+                  selectedRequest?.requestId ===
+                  request.requestId
+                ) {
 
-                <div className="flex gap-4">
+                  setSelectedRequest(null);
 
-                  <div className="h-14 w-14 rounded-full bg-blue-100 flex items-center justify-center">
+                } else {
 
-                    <FaUserCircle
-                      size={34}
-                      className="text-blue-600"
-                    />
+                  setSelectedRequest(request);
 
-                  </div>
+                }
 
-                  <div>
-
-                    <h3 className="font-bold text-lg">
-                      {request.passengerName}
-                    </h3>
-
-                    <p className="text-sm text-green-600 font-medium">
-                      {request.matchPercentage}% Route Match
-                    </p>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-              <div className="mt-5 space-y-3">
-
-                <div className="flex gap-3">
-
-                  <FaMapMarkerAlt className="text-green-600 mt-1"/>
-
-                  <div>
-
-                    <p className="text-xs text-gray-500">
-                      Pickup
-                    </p>
-
-                    <p className="font-medium">
-                      {request.pickupAddress}
-                    </p>
-
-                  </div>
-
-                </div>
-
-                <div className="flex gap-3">
-
-                  <FaMapMarkerAlt className="text-red-500 mt-1"/>
-
-                  <div>
-
-                    <p className="text-xs text-gray-500">
-                      Destination
-                    </p>
-
-                    <p className="font-medium">
-                      {request.destinationAddress}
-                    </p>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-              <div className="flex gap-3 mt-6">
-
-                <button
-                  onClick={() =>
-                    onAccept(request.requestId)
-                  }
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl flex justify-center items-center gap-2 font-semibold transition"
-                >
-
-                  <FaCheck/>
-
-                  Accept
-
-                </button>
-
-                <button
-                  onClick={() =>
-                    onReject(request.requestId)
-                  }
-                  className="flex-1 bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl flex justify-center items-center gap-2 font-semibold transition"
-                >
-
-                  <FaTimes/>
-
-                  Reject
-
-                </button>
-
-              </div>
-
-            </div>
+              }}
+              onAccept={onAccept}
+              onReject={onReject}
+            />
 
           ))}
 

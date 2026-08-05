@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import * as AuthService from "../service/AuthService";
 import { getProfileCompletedStatus } from "../service/UserService";
+import { AuthContext } from "../context/AuthContext";
+import * as RideService from "../service/RideService";
+
 
 
 function Login() {
   const navigate = useNavigate();
+  const {login} = useContext(AuthContext)
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,15 +36,23 @@ function Login() {
         email,
         password,
       });
+      
 
       console.log(response);
+      login();
 
       const profileCompleted = await getProfileCompletedStatus();
 
-if (profileCompleted) {
-    navigate("/roleselection");
-} else {
+if (!profileCompleted) {
     navigate("/createprofile");
+    return;
+}
+const hasActiveRide = await RideService.hasActiveRide();
+
+if (hasActiveRide) {
+  navigate("/dashboard");
+} else {
+  navigate("/roleselection");
 }
     } catch (error: any) {
       console.error(error);

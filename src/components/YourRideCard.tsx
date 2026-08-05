@@ -10,11 +10,13 @@ import type { RideResponse } from "../interfaces/RideResponse";
 interface ActiveRideCardProps {
   ride: RideResponse;
   onStartRide: () => void;
+  onCancelRide: () => void;
 }
 
 function YourRideCard({
   ride,
   onStartRide,
+  onCancelRide,
 }: ActiveRideCardProps) {
 
   const departureTime = new Date(
@@ -157,7 +159,7 @@ function YourRideCard({
         </div>
 
         {/* Button */}
-
+        <div className="flex gap-3">
         <button
           onClick={onStartRide}
           className="mt-8 w-full bg-white text-green-700 hover:bg-green-50 rounded-2xl py-4 font-semibold flex justify-center items-center gap-3 transition"
@@ -170,6 +172,19 @@ function YourRideCard({
           <FaArrowRight />
 
         </button>
+        <button
+          onClick={onCancelRide}
+          className="mt-8 w-full bg-white text-green-700 hover:bg-green-50 rounded-2xl py-4 font-semibold flex justify-center items-center gap-3 transition"
+        >
+
+          
+
+          Cancel
+
+          
+
+        </button>
+        </div>
 
       </div>
 

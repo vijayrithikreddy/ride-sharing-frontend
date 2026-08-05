@@ -1,13 +1,47 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import YourRideCard from "./YourRideCard";
 import RideInsightsCard from "./RideInsightsCard";
 import PassengerRequests from "./PassengerRequests";
 import { RideContext } from "../context/RideContext";
+import type { RideRequestResponse } from "../interfaces/RideRequestResponse";
+import * as RideRequestService from "../service/RideRequestService";
+import * as RideService from "../service/RideService";
+import { FaRoute } from "react-icons/fa";
+import RidePreviewMap from "./RidePreviewMap";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
+  const navigate = useNavigate();
 
   const { activeRide } = useContext(RideContext);
+  const [requests,setRequests] = useState<RideRequestResponse[]>([]);
+  const [selectedRequest, setSelectedRequest] = useState<RideRequestResponse | null>(null);
+  useEffect(() => {
+
+  if (activeRide) {
+    loadRequests();
+  }
+
+}, [activeRide]);
+console.log("Active Ride:", activeRide);
+
+const loadRequests = async () => {
+
+  try {
+
+    const response =
+      await RideRequestService.getMyRideRequestsForDriver();
+
+    setRequests(response);
+
+  } catch (error) {
+
+    console.error("Failed to load ride requests", error);
+
+  }
+
+};
 
   if (!activeRide) {
     return (
@@ -33,6 +67,14 @@ function Dashboard() {
 
       </div>
     );
+  }
+  const handleAccept = async (requestId: number) =>{
+    await RideRequestService.acceptRideRequest(requestId);
+    console.log("Ride Accepted");
+  }
+  const handleReject = async (requestId: number) =>{
+    await RideRequestService.rejectRideRequest(requestId);
+    console.log("Ride Rejected");
   }
 
   return (
@@ -67,10 +109,16 @@ function Dashboard() {
 
               ride={activeRide}
 
-              onStartRide={() => {
-
+              onStartRide={async() => {
+                // await RideService.startRide();
+                navigate("/live")
                 console.log("Start Ride");
 
+              }}
+              
+              onCancelRide={async() =>{
+                await RideService.cancelRide();
+                console.log("Cancel Ride");
               }}
 
             />
@@ -87,35 +135,72 @@ function Dashboard() {
 
             trafficDelay="+5 mins"
 
-            requests={0}
+            requests={requests.length}
 
           />
 
         </div>
 
         {/* Passenger Request */}
+<div className="grid lg:grid-cols-5 gap-6 mt-10">
 
-        <div className="mt-10">
+  <div className="lg:col-span-2">
 
-          <PassengerRequests
+    <PassengerRequests
+      requests={requests}
+      selectedRequest={selectedRequest}
+      setSelectedRequest={setSelectedRequest}
+      onAccept={handleAccept}
+      onReject={handleReject}
+    />
 
-            requests={[]}
+  </div>
 
-            onAccept={(id) => {
+  <div className="lg:col-span-3">
+    
 
-              console.log("Accepted", id);
+    {selectedRequest ? (
 
-            }}
+      <RidePreviewMap
+    riderPolyline={activeRide.encodedPolyline}
+    passengerPolyline={selectedRequest.passengerEncodedPolyline}
+    pickup={selectedRequest.source}
+    destination={selectedRequest.destination}
+/>
 
-            onReject={(id) => {
+    ) : (
 
-              console.log("Rejected", id);
+      <div className="bg-white rounded-3xl shadow-xl h-[720px] flex flex-col justify-center items-center">
 
-            }}
+    <div className="w-24 h-24 rounded-full bg-blue-100 flex justify-center items-center">
 
-          />
+        <FaRoute
+            className="text-blue-600"
+            size={40}
+        />
 
-        </div>
+    </div>
+
+    <h2 className="text-3xl font-bold mt-6">
+
+        Preview Route
+
+    </h2>
+
+    <p className="text-gray-500 mt-3">
+
+        Select a passenger request to compare
+        the passenger route with your ride.
+
+    </p>
+
+</div>
+
+    )}
+
+  </div>
+
+</div>
 
       </div>
 
