@@ -15,8 +15,10 @@ const containerStyle = {
 
 
 
-const libraries: ("places")[] = ["places"];
-
+const libraries: ("places" | "geometry")[] = [
+  "places",
+  "geometry",
+];
 interface GoogleMapViewProps {
   pickup: Location | null;
   destination: Location | null;

@@ -32,3 +32,6 @@ export const completeRide = () => {
 export const searchRides = (request: any) => {
   return api.post("/rides/search", request);
 };
+export const hasActiveRide = () => {
+  return api.get("/rides/isactive");
+};

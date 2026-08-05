@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaMotorcycle, FaUserFriends } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import * as UserService from "../service/UserService";
+import { AuthContext } from "../context/AuthContext";
 
 function RoleSelection() {
+  let {setUserType} = useContext(AuthContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -14,6 +16,8 @@ function RoleSelection() {
       setLoading(true);
 
       await UserService.updateUserMode(role);
+      setUserType(role);
+
 
       if (role === "RIDER") {
         navigate("/home");

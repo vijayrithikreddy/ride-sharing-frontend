@@ -50,3 +50,8 @@ export const searchRides = async (request: SearchRideRequest) => {
 
   return response.data;
 };
+export const hasActiveRide = async () => {
+  const response = await RideApi.hasActiveRide();
+
+  return response.data;
+};
