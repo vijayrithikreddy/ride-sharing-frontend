@@ -12,4 +12,5 @@ export interface CreatePassengerRideRequest {
   departureTime: string;
 
   matchPercentage: number;
+  ridePrice : number,
 }
