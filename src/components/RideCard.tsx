@@ -15,7 +15,12 @@ interface RideCardProps {
   expanded: boolean;
   onClick: () => void;
   onRequestRide: (ride: RideSearchResponse) => void;
-    requested: boolean;
+
+  requestStatus?:
+    | "PENDING"
+    | "ACCEPTED"
+    | "REJECTED"
+    | "CANCELLED";
 }
 
 function RideCard({
@@ -23,7 +28,7 @@ function RideCard({
   expanded,
   onClick,
   onRequestRide,
-  requested,
+  requestStatus,
 }: RideCardProps) {
 
   const departureTime = new Date(
@@ -261,15 +266,45 @@ function RideCard({
 
           {/* Request Button */}
 
-          <div className="mt-6 flex justify-end">
+          {/* Request Button */}
 
-  {requested ? (
+<div className="mt-6 flex justify-end">
+
+  {requestStatus === "PENDING" ? (
+
+    <div className="flex items-center gap-2 bg-yellow-100 text-yellow-700 px-5 py-2 rounded-full font-semibold">
+
+      <span className="h-2 w-2 rounded-full bg-yellow-500"></span>
+
+      Pending
+
+    </div>
+
+  ) : requestStatus === "ACCEPTED" ? (
 
     <div className="flex items-center gap-2 bg-green-100 text-green-700 px-5 py-2 rounded-full font-semibold">
 
       <span className="h-2 w-2 rounded-full bg-green-600"></span>
 
-      Requested
+      Accepted
+
+    </div>
+
+  ) : requestStatus === "REJECTED" ? (
+
+    <div className="flex items-center gap-2 bg-red-100 text-red-700 px-5 py-2 rounded-full font-semibold">
+
+      <span className="h-2 w-2 rounded-full bg-red-600"></span>
+
+      Rejected
+
+    </div>
+
+  ) : requestStatus === "CANCELLED" ? (
+
+    <div className="flex items-center gap-2 bg-gray-200 text-gray-700 px-5 py-2 rounded-full font-semibold">
+
+      Cancelled
 
     </div>
 
@@ -278,7 +313,7 @@ function RideCard({
     <button
       onClick={(e) => {
         e.stopPropagation();
-        onRequestRide(ride)
+        onRequestRide(ride);
       }}
       className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition"
     >

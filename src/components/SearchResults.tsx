@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import RidePreviewMap from "./RidePreviewMap";
 import RideCard from "./RideCard";
 import type { RideSearchResponse } from "../interfaces/RideSearchResponse";
 import * as RideRequestService from "../service/RideRequestService";
 import type { CreatePassengerRideRequest } from "../interfaces/CreatePassengerRideRequest";
+import { FaArrowRight } from "react-icons/fa";
 
 function SearchResults() {
+  const navigate = useNavigate();
 
   const location = useLocation();
 
@@ -93,7 +95,11 @@ function SearchResults() {
               expanded={
                 selectedRide?.rideId === ride.rideId
               }
-              requested={requestedRideIds.includes(ride.rideId)}
+              requestStatus={
+  requestedRideIds.includes(ride.rideId)
+    ? "PENDING"
+    : undefined
+}
               onRequestRide={handleRequestRide}
               onClick={() => {
 
@@ -160,6 +166,43 @@ function SearchResults() {
   )}
 
 </div>
+       {requestedRideIds.length > 0 && (
+
+  <div className="fixed bottom-6 right-6 w-[340px]">
+
+    <div className="bg-white rounded-2xl shadow-2xl p-5">
+
+      <h3 className="text-xl font-bold text-green-600">
+
+        ✓ {requestedRideIds.length} Ride Request
+        {requestedRideIds.length > 1 ? "s" : ""} Sent
+
+      </h3>
+
+      <p className="text-gray-500 mt-2">
+
+        You can continue requesting more rides
+        or move to your dashboard to track
+        their status.
+
+      </p>
+
+      <button
+        onClick={() => navigate("/passengerdashboard")}
+        className="w-full mt-5 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold flex justify-center items-center gap-2"
+      >
+
+        Go To Dashboard
+
+        <FaArrowRight />
+
+      </button>
+
+    </div>
+
+  </div>
+
+)}
 
     </div>
 

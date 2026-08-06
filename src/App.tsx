@@ -12,6 +12,7 @@ import DashBoard from "./components/DashBoard";
 import SearchResults from "./components/SearchResults";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LiveRide from "./components/LiveRide";
+import PassengerDashBoard from "./components/PassengerDashBoard";
 
 function App() {
   return (
@@ -40,7 +41,16 @@ function App() {
             element={<SearchResults />}
             
           />
-          <Route path="/live" element={<LiveRide/>}></Route>
+          <Route
+            path="/passengerdashboard"
+            element={<PassengerDashBoard />}
+            
+          />
+          
+          <Route
+    path="/live/:rideId"
+    element={<LiveRide />}
+/>
         </Route>
           
       </Routes>

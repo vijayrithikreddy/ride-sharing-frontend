@@ -55,3 +55,7 @@ export const hasActiveRide = async () => {
 
   return response.data;
 };
+export const getLiveRide = async (rideId: number) => {
+    const response = await RideApi.getLiveRide(rideId);
+    return response.data;
+};

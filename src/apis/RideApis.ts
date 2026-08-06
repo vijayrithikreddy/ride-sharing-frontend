@@ -35,3 +35,6 @@ export const searchRides = (request: any) => {
 export const hasActiveRide = () => {
   return api.get("/rides/isactive");
 };
+export const getLiveRide = (rideId: number) =>{
+    return api.get(`/rides/live/${rideId}`);
+};

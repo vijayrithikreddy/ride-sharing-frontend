@@ -39,6 +39,8 @@ function Login() {
       
 
       console.log(response);
+      const id = response.userResponse.id
+      localStorage.setItem("AUTH_USER_ID", id);
       login();
 
       const profileCompleted = await getProfileCompletedStatus();

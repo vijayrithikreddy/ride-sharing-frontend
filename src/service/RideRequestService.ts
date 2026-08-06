@@ -30,6 +30,10 @@ export const getMyRideRequests = async () => {
   const response = await RideRequestApis.getMyRideRequests();
   return response.data;
 };
+export const getMyActiveRideRequests = async () => {
+  const response = await RideRequestApis.getMyActiveRideRequests();
+  return response.data;
+};
 
 export const getMyRideRequestsForDriver = async () => {
   const response = await RideRequestApis.getMyRideRequestsForDriver();
