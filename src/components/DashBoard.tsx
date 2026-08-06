@@ -10,6 +10,7 @@ import * as RideService from "../service/RideService";
 import { FaRoute } from "react-icons/fa";
 import RidePreviewMap from "./RidePreviewMap";
 import { useNavigate } from "react-router-dom";
+import WebSocketService from "../service/WebSocketService.ts";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -19,9 +20,31 @@ function Dashboard() {
   const [selectedRequest, setSelectedRequest] = useState<RideRequestResponse | null>(null);
   useEffect(() => {
 
-  if (activeRide) {
+    if (!activeRide) return;
+
     loadRequests();
-  }
+
+    WebSocketService.connect();
+
+    WebSocketService.subscribe(
+    `/topic/rides/${activeRide.rideId}/requests`,
+    (message) => {
+
+        console.log(
+            "WEBSOCKET JSON:",
+            JSON.stringify(message, null, 2)
+        );
+
+        setRequests(prev => [...prev, message.payload]);
+
+    }
+);
+
+    return () => {
+
+        WebSocketService.disconnect();
+
+    };
 
 }, [activeRide]);
 console.log("Active Ride:", activeRide);

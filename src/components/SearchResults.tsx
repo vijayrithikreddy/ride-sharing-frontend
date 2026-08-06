@@ -46,6 +46,7 @@ function SearchResults() {
 
   matchPercentage:
     ride.matchPercentage,
+  ridePrice : ride.price,
 
 });
 
