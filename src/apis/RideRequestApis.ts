@@ -22,6 +22,9 @@ export const cancelRideRequest = (requestId: number) => {
 export const getMyRideRequests = () => {
   return api.get("/ride-requests/myrequests");
 };
+export const getMyActiveRideRequests = () => {
+  return api.get("/ride-requests/myactiverequests");
+};
 
 export const getMyRideRequestsForDriver = () => {
   return api.get("/ride-requests/myriderequests");

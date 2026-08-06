@@ -25,6 +25,37 @@ function Dashboard() {
     loadRequests();
 
     WebSocketService.connect();
+    const driverId = localStorage.getItem("AUTH_USER_ID");
+
+if (driverId) {
+
+    WebSocketService.subscribe(
+
+        `/topic/driver/${driverId}`,
+
+        (event) => {
+
+            console.log("Driver Event:", event);
+
+            switch (event.type) {
+
+                case "RIDE_STARTED":
+
+                    navigate(`/live/${event.payload}`);
+
+                    break;
+
+                default:
+
+                    console.log("Unknown Driver Event:", event.type);
+
+            }
+
+        }
+
+    );
+
+}
 
     WebSocketService.subscribe(
     `/topic/rides/${activeRide.rideId}/requests`,
@@ -133,8 +164,7 @@ const loadRequests = async () => {
               ride={activeRide}
 
               onStartRide={async() => {
-                // await RideService.startRide();
-                navigate("/live")
+                 await RideService.startRide();
                 console.log("Start Ride");
 
               }}

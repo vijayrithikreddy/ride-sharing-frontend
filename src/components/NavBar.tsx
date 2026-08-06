@@ -47,7 +47,7 @@ function NavBar() {
 
       {/* Right Section */}
       <div className="flex items-center gap-5">
-       {userType === "RIDER" ? (
+       {localStorage.getItem("userType") === "RIDER" ? (
   <button className="bg-white text-blue-600 font-semibold px-6 py-1 rounded-lg hover:bg-blue-50 transition">
     Switch to Passenger
   </button>

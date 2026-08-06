@@ -17,6 +17,7 @@ function RoleSelection() {
 
       await UserService.updateUserMode(role);
       setUserType(role);
+      localStorage.setItem("userType", role);
 
 
       if (role === "RIDER") {
