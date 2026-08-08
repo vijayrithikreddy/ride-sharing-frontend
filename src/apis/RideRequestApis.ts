@@ -29,3 +29,7 @@ export const getMyActiveRideRequests = () => {
 export const getMyRideRequestsForDriver = () => {
   return api.get("/ride-requests/myriderequests");
 };
+
+export const getPassengerRideHistory = () => {
+  return api.get("/ride-requests/history");
+};

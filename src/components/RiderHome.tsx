@@ -1,101 +1,72 @@
-import React from "react";
-import { FaMotorcycle, FaArrowRight } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import GoogleMapView from "./GoogleMapView";
 import NavBar from "./NavBar";
+import WelcomeCard from "./WelcomeCard";
+import PublishRideCard from "./PublishRideCard";
+
+type Step = "welcome" | "publish";
+
+export interface Location {
+  address: string;
+  lat: number;
+  lng: number;
+}
 
 function RiderHome() {
-  const navigate = useNavigate();
+  const [step, setStep] = useState<Step>("welcome");
+
+  const [pickup, setPickup] = useState<Location | null>(null);
+
+  const [destination, setDestination] = useState<Location | null>(null);
+  const [encodedPolyline, setEncodedPolyline] = useState("");
+
+  const [selecting, setSelecting] = useState<"pickup" | "destination" | null>(null);
 
   return (
-    <div className="h-screen bg-gray-100 flex flex-col">
+    <div className="h-screen flex flex-col bg-gray-100">
 
       <NavBar />
 
       <div className="relative flex-1">
+        {selecting && (
+    <div className="absolute top-5 left-1/2 -translate-x-1/2 z-50">
 
-        {/* Google Maps */}
-        <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
+        <div className="bg-blue-600 text-white px-6 py-3 rounded-full shadow-xl">
 
-          <div className="text-center">
-
-            <h2 className="text-3xl font-bold text-gray-700">
-              Google Maps
-            </h2>
-
-            <p className="text-gray-500 mt-2">
-              Your current location and nearby passengers will appear here.
-            </p>
-
-          </div>
+            {selecting === "pickup"
+                ? "📍 Click on the map to select Pickup"
+                : "📍 Click on the map to select Destination"}
 
         </div>
 
-        {/* Floating Publish Card */}
+    </div>
+)}
+        <GoogleMapView
+          pickup={pickup}
+          destination={destination}
+          setPickup={setPickup}
+          setDestination={setDestination}
+          selecting={selecting}
+          setSelecting={setSelecting}
+          setEncodedPolyline={setEncodedPolyline}
+        />
 
-        <div className="absolute top-8 left-8 w-[420px]">
+        {step === "welcome" && (
+          <WelcomeCard setStep={setStep} />
+        )}
 
-          <div className="bg-white rounded-3xl shadow-2xl p-8">
-
-            <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center">
-
-              <FaMotorcycle
-                size={30}
-                className="text-blue-600"
-              />
-
-            </div>
-
-            <h1 className="text-3xl font-bold mt-6 text-gray-900">
-              Hello Vijay 👋
-            </h1>
-
-            <p className="text-gray-500 mt-3 leading-7">
-              Ready to share your ride today?
-              Publish your trip and help fellow students
-              travelling on the same route.
-            </p>
-
-            <div className="mt-8 space-y-3">
-
-              <div className="flex items-center justify-between">
-
-                <span className="text-gray-600">
-                  Active Ride
-                </span>
-
-                <span className="font-semibold text-gray-900">
-                  None
-                </span>
-
-              </div>
-
-              <div className="flex items-center justify-between">
-
-                <span className="text-gray-600">
-                  Pending Requests
-                </span>
-
-                <span className="font-semibold text-gray-900">
-                  0
-                </span>
-
-              </div>
-
-            </div>
-
-            <button
-              onClick={() => navigate("/publishride")}
-              className="mt-10 w-full bg-blue-600 hover:bg-blue-700 transition text-white py-4 rounded-xl font-semibold flex items-center justify-center gap-3"
-            >
-              Publish Ride
-
-              <FaArrowRight />
-
-            </button>
-
-          </div>
-
-        </div>
+        {step === "publish" && (
+          <PublishRideCard
+            setStep={setStep}
+            pickup={pickup}
+            destination={destination}
+            setPickup={setPickup}
+            setDestination={setDestination}
+            selecting={selecting}
+            setSelecting={setSelecting}
+            encodedPolyline={encodedPolyline}
+          />
+        )}
 
       </div>
 

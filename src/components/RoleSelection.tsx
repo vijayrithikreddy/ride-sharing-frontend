@@ -10,28 +10,30 @@ function RoleSelection() {
   const [loading, setLoading] = useState(false);
 
   const handleRoleSelection = async (
-    role: "RIDER" | "PASSENGER"
-  ) => {
-    try {
-      setLoading(true);
+  role: "RIDER" | "PASSENGER"
+) => {
+  try {
 
-      await UserService.updateUserMode(role);
-      setUserType(role);
-      localStorage.setItem("userType", role);
+    setLoading(true);
 
+    await UserService.updateUserMode(role);
 
-      if (role === "RIDER") {
-        navigate("/home");
-      } else {
-        navigate("/passengerhome");
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    setUserType(role);
 
+    localStorage.setItem("userType", role);
+
+    navigate("/home");
+
+  } catch (error) {
+
+    console.error(error);
+
+  } finally {
+
+    setLoading(false);
+
+  }
+};
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-6">
       <div className="w-full max-w-5xl">

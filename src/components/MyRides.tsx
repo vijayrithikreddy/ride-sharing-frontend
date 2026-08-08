@@ -1,22 +1,22 @@
-import RiderDashBoard from "./RiderDashBoard";
-import PassengerDashBoard from "./PassengerDashBoard";
 import NavBar from "./NavBar";
+import PassengerRideHistory from "./PassengerRideHistory";
+import RideHistory from "./RideHistory";
 
-function Dashboard() {
+function MyRides() {
 
     const userType = localStorage.getItem("userType");
 
     if (userType === "RIDER") {
         return <>
         <NavBar></NavBar>
-        <RiderDashBoard />
+        <RideHistory />
         </>;
     }
 
     return <>
     <NavBar></NavBar>
-    <PassengerDashBoard />
+    <PassengerRideHistory />
     </>;
 }
 
-export default Dashboard;
+export default MyRides;

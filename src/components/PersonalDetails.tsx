@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import type { UserProfileDto } from "./Profile";
+import type { UserProfileDto } from "./CreateProfile";
 
 interface PersonalDetailsProps {
   step: number;

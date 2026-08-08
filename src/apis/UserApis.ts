@@ -29,3 +29,8 @@ export const updateMode = (userMode: "RIDER" | "PASSENGER") => {
         userMode,
     });
 };
+export const getUserProfile = () => {
+
+    return api.get("/userprofiles/me");
+
+};

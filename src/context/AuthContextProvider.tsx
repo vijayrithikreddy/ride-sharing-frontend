@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
+import WebSocketService from "../service/WebSocketService";
 
 interface Props {
   children: React.ReactNode;
@@ -36,13 +37,15 @@ function AuthContextProvider({ children }: Props) {
   };
 
   const logout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("userProfile");
-    localStorage.removeItem("userType");
+    WebSocketService.disconnect();
+
+    localStorage.clear();
 
     setIsAuthenticated(false);
+
     setUserType(null);
-  };
+
+};
 
   return (
     <AuthContext.Provider

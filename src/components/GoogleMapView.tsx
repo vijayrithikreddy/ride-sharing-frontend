@@ -90,9 +90,9 @@ const [center,setCenter] = useState(Defaultcenter);
       (result, status) => {
 
         if (status === "OK" && result) {
-          setDirections(result);
-        }
-        setEncodedPolyline(result.routes[0].overview_polyline);
+    setDirections(result);
+    setEncodedPolyline(result.routes[0].overview_polyline);
+}
 
       }
     );
@@ -227,8 +227,8 @@ const [center,setCenter] = useState(Defaultcenter);
 
         const location: Location = {
           address: results[0].formatted_address,
-          latitude,
-          longitude,
+          latitude : lat,
+          longitude : lng,
         };
 
         if (selecting === "pickup") {

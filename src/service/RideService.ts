@@ -59,3 +59,11 @@ export const getLiveRide = async (rideId: number) => {
     const response = await RideApi.getLiveRide(rideId);
     return response.data;
 };
+export const updateDriverLocation = async (latitude: number,longitude: number
+) => {
+   RideApi.updateDriverLocation(latitude,longitude,);
+};
+export const updatePassengerLocation = async (latitude: number,longitude: number
+) => {
+   RideApi.updatePassengerLocation(latitude,longitude,);
+};
