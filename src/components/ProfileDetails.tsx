@@ -1,6 +1,7 @@
 import React from "react";
-import type { UserProfileDto } from "./CreateProfile";
+import type { UserProfileDto } from "../interfaces/UserProfileDto";
 import DefaultAvatar from "../images/defaultavatar.png";
+import { FaCamera, FaGraduationCap, FaBriefcase, FaMotorcycle, FaBuilding, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 interface ProfileDetailsProps {
   step: number;
@@ -25,9 +26,6 @@ function ProfileDetails({
   preview,
   setPreview,
 }: ProfileDetailsProps) {
-  const inputStyle =
-    "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500";
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -71,55 +69,38 @@ function ProfileDetails({
   };
 
   return (
-    <div className="bg-white w-full max-w-lg rounded-xl shadow-lg p-6">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-4">
-        <span className="text-xs font-medium text-gray-500">
-          Step {step} of 3
-        </span>
-
-        <span className="text-xs font-medium text-blue-600">
-          Profile Details
-        </span>
-      </div>
-
-      {/* Progress */}
-      <div className="w-full bg-gray-200 rounded-full h-1 mb-6">
-        <div className="bg-blue-600 h-1 rounded-full w-2/3"></div>
-      </div>
-
-      {/* Title */}
+    <div className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 p-6 sm:p-8 border border-gray-100 animate-fadeIn">
+      {/* Step Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">
-          Complete Your Profile
-        </h1>
-
+        <h2 className="text-2xl font-extrabold text-gray-900">Profile Details</h2>
         <p className="text-sm text-gray-500 mt-1">
-          Add a profile picture and tell us a little more about yourself.
+          Upload a profile picture and tell us a bit more about yourself.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-
-        {/* Profile Picture */}
-
-        <div className="flex flex-col items-center gap-2">
-          <label
-            htmlFor="profilePic"
-            className="cursor-pointer"
-          >
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        {/* Profile Picture Upload */}
+        <div className="flex flex-col items-center justify-center p-4 bg-gray-50 border border-dashed border-gray-200 rounded-2xl">
+          <div className="relative group cursor-pointer">
             <img
               src={preview || DefaultAvatar}
               alt="Profile Preview"
-              className="w-24 h-24 rounded-full object-cover border-2 border-gray-300 hover:border-blue-500 transition"
+              className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md group-hover:opacity-90 transition-all duration-200"
             />
-          </label>
+            <label
+              htmlFor="profilePic"
+              className="absolute bottom-0 right-0 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full shadow-md cursor-pointer transition-transform duration-200 group-hover:scale-110"
+              title="Upload Photo"
+            >
+              <FaCamera className="text-xs" />
+            </label>
+          </div>
 
           <label
             htmlFor="profilePic"
-            className="text-sm text-blue-600 hover:text-blue-700 cursor-pointer font-medium"
+            className="text-xs font-semibold text-blue-600 hover:text-blue-700 cursor-pointer mt-3"
           >
-            Upload Picture
+            {preview ? "Change Profile Picture" : "Upload Profile Picture"}
           </label>
 
           <input
@@ -132,101 +113,103 @@ function ProfileDetails({
         </div>
 
         {/* Occupation */}
-
         <div>
-          <label className="text-sm font-medium">
+          <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
             Occupation
           </label>
 
-          <div className="flex flex-wrap gap-2 mt-2">
+          <div className="grid grid-cols-3 gap-2.5">
             <button
               type="button"
               onClick={() => handleOccupation("STUDENT")}
-              className={`px-3 py-2 rounded-lg border text-sm transition ${
+              className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 py-3 px-2 rounded-xl border text-xs sm:text-sm font-semibold transition-all duration-200 ${
                 formData.occupation === "STUDENT"
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "hover:border-blue-500"
+                  ? "bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-600/30"
+                  : "bg-gray-50 text-gray-700 border-gray-200 hover:border-blue-400 hover:bg-white"
               }`}
             >
+              <FaGraduationCap className="text-sm" />
               Student
             </button>
 
             <button
               type="button"
               onClick={() => handleOccupation("EMPLOYEE")}
-              className={`px-3 py-2 rounded-lg border text-sm transition ${
+              className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 py-3 px-2 rounded-xl border text-xs sm:text-sm font-semibold transition-all duration-200 ${
                 formData.occupation === "EMPLOYEE"
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "hover:border-blue-500"
+                  ? "bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-600/30"
+                  : "bg-gray-50 text-gray-700 border-gray-200 hover:border-blue-400 hover:bg-white"
               }`}
             >
+              <FaBriefcase className="text-sm" />
               Employee
             </button>
 
             <button
               type="button"
               onClick={() => handleOccupation("DAILY_COMMUTER")}
-              className={`px-3 py-2 rounded-lg border text-sm transition ${
+              className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 py-3 px-2 rounded-xl border text-xs sm:text-sm font-semibold transition-all duration-200 ${
                 formData.occupation === "DAILY_COMMUTER"
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "hover:border-blue-500"
+                  ? "bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-600/30"
+                  : "bg-gray-50 text-gray-700 border-gray-200 hover:border-blue-400 hover:bg-white"
               }`}
             >
-              Daily Commuter
+              <FaMotorcycle className="text-sm" />
+              Commuter
             </button>
           </div>
         </div>
 
         {/* Organization */}
-
         <div>
-          <label className="text-sm font-medium">
-            Organization
+          <label htmlFor="organization" className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1.5">
+            Organization / Institute
           </label>
-
-          <input
-            type="text"
-            name="organization"
-            placeholder="College / Company"
-            className={`${inputStyle} mt-1`}
-            value={formData.organization}
-            onChange={handleChange}
-          />
+          <div className="relative flex items-center">
+            <FaBuilding className="absolute left-3.5 text-gray-400 text-sm" />
+            <input
+              id="organization"
+              type="text"
+              name="organization"
+              placeholder="College, University, or Company Name"
+              className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-900 text-sm placeholder-gray-400 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all duration-200"
+              value={formData.organization}
+              onChange={handleChange}
+            />
+          </div>
         </div>
 
         {/* Bio */}
-
         <div>
-          <label className="text-sm font-medium">
-            Bio
+          <label htmlFor="bio" className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1.5">
+            Short Bio
           </label>
-
           <textarea
+            id="bio"
             name="bio"
             rows={3}
-            placeholder="Tell us about yourself..."
-            className={`${inputStyle} mt-1 resize-none`}
+            placeholder="Share a short bio (e.g. Daily commuter from Whitefield to Tech Park)..."
+            className="w-full p-3.5 border border-gray-200 rounded-xl bg-gray-50 text-gray-900 text-sm placeholder-gray-400 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all duration-200 resize-none"
             value={formData.bio}
             onChange={handleChange}
           />
         </div>
 
-        {/* Buttons */}
-
-        <div className="flex justify-between pt-2">
+        {/* Navigation Buttons */}
+        <div className="flex items-center justify-between pt-2">
           <button
             type="button"
             onClick={decreaseStep}
-            className="px-4 py-2 border rounded-lg hover:border-blue-600 transition"
+            className="px-5 py-3 border border-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 hover:border-gray-300 flex items-center gap-2 transition-all duration-200"
           >
-            Back
+            <FaArrowLeft className="text-xs" /> Back
           </button>
 
           <button
             type="submit"
-            className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            className="bg-blue-600 text-white py-3 px-6 rounded-xl flex items-center justify-center gap-2 font-semibold hover:bg-blue-700 active:scale-[0.98] transition-all duration-200 shadow-md shadow-blue-600/25 hover:shadow-lg hover:shadow-blue-600/30"
           >
-            Continue
+            Continue <FaArrowRight className="text-sm" />
           </button>
         </div>
       </form>

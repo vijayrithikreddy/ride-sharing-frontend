@@ -6,6 +6,8 @@ import {
   FaPlay,
   FaRupeeSign,
   FaUserCircle,
+  FaClock,
+  FaCheckCircle,
 } from "react-icons/fa";
 import type { RideResponse } from "../interfaces/RideResponse";
 
@@ -20,251 +22,152 @@ function YourRideCard({
   onStartRide,
   onCancelRide,
 }: ActiveRideCardProps) {
-
-  const departureTime = new Date(
-    ride.departureTime
-  ).toLocaleTimeString([], {
+  const departureTime = new Date(ride.departureTime).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
   });
 
   return (
-    <div className="bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600 rounded-3xl shadow-2xl text-white overflow-hidden">
+    <div className="bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-700 rounded-3xl shadow-xl text-white overflow-hidden relative">
+      {/* Background glow accent */}
+      <div className="absolute -top-16 -right-16 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
 
-      <div className="p-8">
-
+      <div className="p-7 relative z-10">
         {/* Header */}
-
         {ride.status === "AVAILABLE" ? (
-
-  <div className="flex justify-between items-center">
-
-    <div>
-
-      <p className="uppercase tracking-widest text-green-100 text-xs font-semibold">
-        ACTIVE RIDE
-      </p>
-
-      <h2 className="text-3xl font-bold mt-1">
-        Ready to Go 🚀
-      </h2>
-
-    </div>
-
-    <div className="h-16 w-16 rounded-2xl bg-white/20 flex items-center justify-center">
-
-      <FaMotorcycle size={28} />
-
-    </div>
-
-  </div>
-
-) : (
-
-  <div className="flex justify-between items-center">
-
-    <div className="flex items-center gap-4">
-
-      {ride.passengerProfile?.profilePictureUrl ? (
-
-        <img
-          src={`http://localhost:8082${ride.passengerProfile.profilePictureUrl}`}
-          className="w-16 h-16 rounded-full object-cover border-2 border-white"
-        />
-
-      ) : (
-
-        <FaUserCircle
-          size={64}
-          className="text-white"
-        />
-
-      )}
-
-      <div>
-
-        <p className="uppercase tracking-widest text-green-100 text-xs font-semibold">
-          PASSENGER
-        </p>
-
-        <h2 className="text-2xl font-bold">
-
-          {ride.passengerProfile?.firstName}{" "}
-          {ride.passengerProfile?.lastName}
-
-        </h2>
-
-        <p className="text-green-100">
-
-          {ride.passengerProfile?.phoneNumber}
-
-        </p>
-
-      </div>
-
-    </div>
-
-    <div className="h-16 w-16 rounded-2xl bg-white/20 flex items-center justify-center">
-
-      <FaMotorcycle size={28} />
-
-    </div>
-
-  </div>
-
-)}
-
-        {/* Route */}
-
-        <div className="mt-8">
-
-          {/* Pickup */}
-
-          <div className="flex gap-4">
-
-            <div className="mt-1">
-
-              <div className="h-3 w-3 rounded-full bg-white"></div>
-
-            </div>
-
+          <div className="flex justify-between items-center pb-5 border-b border-white/15">
             <div>
+              <span className="uppercase tracking-widest text-[11px] font-bold text-emerald-200 bg-white/10 px-2.5 py-1 rounded-full border border-white/15">
+                Active Published Ride
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold mt-2 tracking-tight">
+                Ready to Start 🚀
+              </h2>
+            </div>
+            <div className="h-14 w-14 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white shadow-md">
+              <FaMotorcycle size={26} />
+            </div>
+          </div>
+        ) : (
+          <div className="flex justify-between items-center pb-5 border-b border-white/15">
+            <div className="flex items-center gap-4">
+              {ride.passengerProfile?.profilePictureUrl ? (
+                <img
+                  src={`http://localhost:8082${ride.passengerProfile.profilePictureUrl}`}
+                  alt="Passenger"
+                  className="w-14 h-14 rounded-2xl object-cover border-2 border-white/80 shadow-md"
+                />
+              ) : (
+                <div className="w-14 h-14 rounded-2xl bg-white/20 flex justify-center items-center">
+                  <FaUserCircle size={36} className="text-white" />
+                </div>
+              )}
+              <div>
+                <span className="uppercase tracking-widest text-[10px] font-bold text-emerald-200">
+                  Passenger Joined
+                </span>
+                <h2 className="text-xl font-extrabold">
+                  {ride.passengerProfile?.firstName}{" "}
+                  {ride.passengerProfile?.lastName}
+                </h2>
+                <p className="text-xs text-emerald-100 mt-0.5">
+                  {ride.passengerProfile?.phoneNumber || "No phone listed"}
+                </p>
+              </div>
+            </div>
+            <div className="h-12 w-12 rounded-xl bg-white/15 flex items-center justify-center">
+              <FaMotorcycle size={22} />
+            </div>
+          </div>
+        )}
 
-              <p className="text-green-100 text-sm">
-                Pickup
+        {/* Route Details Timeline */}
+        <div className="py-6 space-y-4">
+          <div className="flex items-start gap-3">
+            <div className="w-3.5 h-3.5 rounded-full bg-white ring-4 ring-white/20 mt-1 flex-shrink-0" />
+            <div>
+              <p className="text-[11px] font-semibold text-emerald-200 uppercase tracking-wider">
+                Starting Location
               </p>
-
-              <h3 className="font-semibold text-lg">
+              <h3 className="font-bold text-sm sm:text-base leading-snug">
                 {ride.source.address}
               </h3>
-
             </div>
-
           </div>
 
-          {/* Connector */}
+          <div className="ml-[6px] h-6 border-l-2 border-dashed border-white/40" />
 
-          <div className="ml-[5px] h-8 border-l-2 border-dashed border-white/70"></div>
-
-          {/* Destination */}
-
-          <div className="flex gap-4">
-
-            <FaMapMarkerAlt
-              className="mt-1"
-              size={14}
-            />
-
+          <div className="flex items-start gap-3">
+            <FaMapMarkerAlt className="text-rose-300 text-sm mt-1 flex-shrink-0" />
             <div>
-
-              <p className="text-green-100 text-sm">
+              <p className="text-[11px] font-semibold text-emerald-200 uppercase tracking-wider">
                 Destination
               </p>
-
-              <h3 className="font-semibold text-lg">
+              <h3 className="font-bold text-sm sm:text-base leading-snug">
                 {ride.destination.address}
               </h3>
-
             </div>
-
           </div>
-
         </div>
 
-        {/* Ride Details */}
-
-        <div className="grid grid-cols-3 gap-4 mt-10">
-
-          <div className="bg-white/15 rounded-2xl p-4 backdrop-blur-md">
-
-            <p className="text-xs text-green-100">
-              Departure
-            </p>
-
-            <h4 className="text-xl font-bold mt-1">
+        {/* Ride Info Pills */}
+        <div className="grid grid-cols-3 gap-3 pt-2 pb-6 border-t border-white/15">
+          <div className="bg-white/10 rounded-2xl p-3 backdrop-blur-md border border-white/10">
+            <div className="flex items-center gap-1.5 text-emerald-200 text-xs font-semibold">
+              <FaClock className="text-xs" /> Departure
+            </div>
+            <h4 className="text-sm sm:text-base font-bold mt-1">
               {departureTime}
             </h4>
-
           </div>
 
-          <div className="bg-white/15 rounded-2xl p-4 backdrop-blur-md">
-
-            <p className="text-xs text-green-100">
-              Price
-            </p>
-
-            <h4 className="text-xl font-bold mt-1 flex items-center gap-1">
-
-              <FaRupeeSign />
-
-              {ride.price}
-
+          <div className="bg-white/10 rounded-2xl p-3 backdrop-blur-md border border-white/10">
+            <div className="flex items-center gap-1 text-emerald-200 text-xs font-semibold">
+              <FaRupeeSign className="text-xs" /> Price/Seat
+            </div>
+            <h4 className="text-sm sm:text-base font-bold mt-1 flex items-center">
+              ₹{ride.price}
             </h4>
-
           </div>
 
-          <div className="bg-white/15 rounded-2xl p-4 backdrop-blur-md">
-
-            <p className="text-xs text-green-100">
-              Status
-            </p>
-
-            <h4 className="text-lg font-bold mt-1">
+          <div className="bg-white/10 rounded-2xl p-3 backdrop-blur-md border border-white/10">
+            <div className="flex items-center gap-1 text-emerald-200 text-xs font-semibold">
+              <FaCheckCircle className="text-xs" /> Status
+            </div>
+            <h4 className="text-xs sm:text-sm font-bold mt-1 truncate">
               {ride.status}
             </h4>
-
           </div>
-
         </div>
 
-        {/* Button */}
-        <div className="flex gap-3 mt-8">
+        {/* Action Buttons */}
+        <div className="flex gap-3">
+          <button
+            onClick={onStartRide}
+            className="flex-1 bg-white text-emerald-800 hover:bg-emerald-50 py-3.5 rounded-xl font-bold flex justify-center items-center gap-2 shadow-md transition-all duration-200 active:scale-[0.98]"
+          >
+            <FaPlay className="text-xs" /> Start Ride <FaArrowRight className="text-xs" />
+          </button>
 
-  <button
-    onClick={onStartRide}
-    className="flex-1 bg-white text-green-700 hover:bg-green-50 rounded-2xl py-4 font-semibold flex justify-center items-center gap-3"
-  >
-
-    <FaPlay />
-
-    Start Ride
-
-    <FaArrowRight />
-
-  </button>
-
-  {ride.status === "AVAILABLE" ? (
-
-    <button
-      onClick={onCancelRide}
-      className="flex-1 bg-red-500 hover:bg-red-600 text-white rounded-2xl py-4 font-semibold"
-    >
-      Cancel Ride
-    </button>
-
-  ) : (
-
-    <button
-      onClick={() =>
-        window.open(
-          `tel:${ride.passengerProfile?.phoneNumber}`
-        )
-      }
-      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl py-4 font-semibold flex justify-center items-center gap-2"
-    >
-
-      <FaPhone />
-
-      Call Passenger
-
-    </button>
-
-  )}
-
-</div>
-
+          {ride.status === "AVAILABLE" ? (
+            <button
+              onClick={onCancelRide}
+              className="flex-1 bg-rose-500 hover:bg-rose-600 text-white rounded-xl py-3.5 font-bold transition-all duration-200 active:scale-[0.98]"
+            >
+              Cancel Ride
+            </button>
+          ) : (
+            <button
+              onClick={() =>
+                window.open(`tel:${ride.passengerProfile?.phoneNumber}`)
+              }
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3.5 font-bold flex justify-center items-center gap-2 transition-all duration-200"
+            >
+              <FaPhone className="text-xs" /> Call Passenger
+            </button>
+          )}
+        </div>
       </div>
-
     </div>
   );
 }

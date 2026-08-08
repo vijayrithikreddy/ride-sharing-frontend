@@ -15,13 +15,15 @@ import MyRides from "./components/MyRides";
 import Home from "./components/Home";
 import ProfilePage from "./components/ProfilePage";
 
+import RootPage from "./components/RootPage";
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
 
         {/* Public Routes */}
-        
+        <Route path="/" element={<RootPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/verifyOtp/:email" element={<VerifyOtp />} />

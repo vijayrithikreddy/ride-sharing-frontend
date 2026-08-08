@@ -1,6 +1,7 @@
 import React from "react";
-import type { UserProfileDto } from "./CreateProfile";
+import type { UserProfileDto } from "../interfaces/UserProfileDto";
 import DefaultAvatar from "../images/defaultavatar.png";
+import { FaArrowLeft, FaCheckCircle, FaUser, FaPhone, FaCalendarAlt, FaVenusMars, FaBriefcase, FaBuilding, FaQuoteLeft } from "react-icons/fa";
 
 interface ProfileReviewProps {
   step: number;
@@ -23,115 +24,127 @@ function ProfileReview({
   };
 
   return (
-    <div className="bg-white w-full max-w-lg rounded-xl shadow-lg p-6">
-
-      {/* Header */}
-      <div className="flex justify-between items-center mb-4">
-        <span className="text-xs font-medium text-gray-500">
-          Step {step} of 3
-        </span>
-
-        <span className="text-xs font-medium text-blue-600">
-          Review Profile
-        </span>
-      </div>
-
-      {/* Progress */}
-      <div className="w-full bg-gray-200 rounded-full h-1 mb-6">
-        <div className="bg-blue-600 h-1 rounded-full w-full"></div>
-      </div>
-
-      {/* Title */}
+    <div className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 p-6 sm:p-8 border border-gray-100 animate-fadeIn">
+      {/* Step Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">
-          Review Your Profile
-        </h1>
-
+        <h2 className="text-2xl font-extrabold text-gray-900">Review Profile</h2>
         <p className="text-sm text-gray-500 mt-1">
           Please verify your information before submitting.
         </p>
       </div>
 
-      {/* Avatar */}
+      {/* Avatar Header */}
+      <div className="flex flex-col items-center justify-center mb-6 p-4 bg-gradient-to-b from-blue-50/50 to-white rounded-2xl border border-blue-100/60">
+        <div className="relative">
+          <img
+            src={preview || DefaultAvatar}
+            alt="Profile Preview"
+            className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
+          />
+          <div className="absolute bottom-0 right-0 bg-emerald-500 text-white p-1.5 rounded-full shadow" title="Ready">
+            <FaCheckCircle className="text-xs" />
+          </div>
+        </div>
 
-      <div className="flex justify-center mb-6">
-        <img
-          src={preview || DefaultAvatar}
-          alt="Profile"
-          className="w-24 h-24 rounded-full object-cover border-2 border-gray-300"
-        />
+        <h3 className="text-lg font-bold text-gray-900 mt-3">
+          {formData.firstName || "Rider"} {formData.lastName || ""}
+        </h3>
+        <p className="text-xs font-semibold text-blue-600 uppercase tracking-wider mt-0.5">
+          {formData.occupation ? formData.occupation.replace("_", " ") : "COMMUTER"}
+        </p>
       </div>
 
-      {/* Details */}
-
-      <div className="space-y-3 text-sm">
-
-        <div className="flex justify-between border-b pb-2">
-          <span className="font-medium">First Name</span>
-          <span>{formData.firstName}</span>
+      {/* Summary Details Grid */}
+      <div className="bg-gray-50/80 rounded-xl p-4 border border-gray-100 space-y-3 text-sm">
+        {/* Full Name */}
+        <div className="flex items-center justify-between py-1.5 border-b border-gray-200/60">
+          <span className="flex items-center gap-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <FaUser className="text-blue-500 text-xs" /> Name
+          </span>
+          <span className="font-semibold text-gray-900">
+            {formData.firstName} {formData.lastName}
+          </span>
         </div>
 
-        <div className="flex justify-between border-b pb-2">
-          <span className="font-medium">Last Name</span>
-          <span>{formData.lastName}</span>
+        {/* Phone */}
+        <div className="flex items-center justify-between py-1.5 border-b border-gray-200/60">
+          <span className="flex items-center gap-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <FaPhone className="text-blue-500 text-xs" /> Phone
+          </span>
+          <span className="font-medium text-gray-900">
+            {formData.phoneNumber || "-"}
+          </span>
         </div>
 
-        <div className="flex justify-between border-b pb-2">
-          <span className="font-medium">Phone</span>
-          <span>{formData.phoneNumber}</span>
+        {/* Date of Birth */}
+        <div className="flex items-center justify-between py-1.5 border-b border-gray-200/60">
+          <span className="flex items-center gap-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <FaCalendarAlt className="text-blue-500 text-xs" /> Date of Birth
+          </span>
+          <span className="font-medium text-gray-900">
+            {formData.dateOfBirth || "-"}
+          </span>
         </div>
 
-        <div className="flex justify-between border-b pb-2">
-          <span className="font-medium">Date of Birth</span>
-          <span>{formData.dateOfBirth}</span>
+        {/* Gender */}
+        <div className="flex items-center justify-between py-1.5 border-b border-gray-200/60">
+          <span className="flex items-center gap-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <FaVenusMars className="text-blue-500 text-xs" /> Gender
+          </span>
+          <span className="font-medium text-gray-900">
+            {formData.gender || "-"}
+          </span>
         </div>
 
-        <div className="flex justify-between border-b pb-2">
-          <span className="font-medium">Gender</span>
-          <span>{formData.gender}</span>
+        {/* Occupation */}
+        <div className="flex items-center justify-between py-1.5 border-b border-gray-200/60">
+          <span className="flex items-center gap-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <FaBriefcase className="text-blue-500 text-xs" /> Occupation
+          </span>
+          <span className="font-medium text-gray-900">
+            {formData.occupation ? formData.occupation.replace("_", " ") : "-"}
+          </span>
         </div>
 
-        <div className="flex justify-between border-b pb-2">
-          <span className="font-medium">Occupation</span>
-          <span>{formData.occupation}</span>
+        {/* Organization */}
+        <div className="flex items-center justify-between py-1.5 border-b border-gray-200/60">
+          <span className="flex items-center gap-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <FaBuilding className="text-blue-500 text-xs" /> Organization
+          </span>
+          <span className="font-medium text-gray-900">
+            {formData.organization || "-"}
+          </span>
         </div>
 
-        <div className="flex justify-between border-b pb-2">
-          <span className="font-medium">Organization</span>
-          <span>{formData.organization}</span>
-        </div>
-
-        <div className="border-b pb-2">
-          <p className="font-medium mb-1">Bio</p>
-          <p className="text-gray-600">
-            {formData.bio || "-"}
+        {/* Bio */}
+        <div className="pt-1.5">
+          <span className="flex items-center gap-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
+            <FaQuoteLeft className="text-blue-500 text-xs" /> Bio
+          </span>
+          <p className="text-xs text-gray-600 bg-white p-2.5 rounded-lg border border-gray-200/70 italic">
+            "{formData.bio || "No bio added."}"
           </p>
         </div>
-
       </div>
 
       {/* Buttons */}
-
-      <div className="flex justify-between mt-8">
-
+      <div className="flex items-center justify-between mt-6">
         <button
           type="button"
           onClick={decreaseStep}
-          className="px-4 py-2 border rounded-lg hover:border-blue-600 transition"
+          className="px-5 py-3 border border-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 hover:border-gray-300 flex items-center gap-2 transition-all duration-200"
         >
-          Back
+          <FaArrowLeft className="text-xs" /> Back
         </button>
 
         <button
           type="button"
           onClick={handleSubmitProfile}
-          className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          className="bg-emerald-600 text-white py-3 px-6 rounded-xl flex items-center justify-center gap-2 font-semibold hover:bg-emerald-700 active:scale-[0.98] transition-all duration-200 shadow-md shadow-emerald-600/25 hover:shadow-lg hover:shadow-emerald-600/30"
         >
-          Submit Profile
+          <FaCheckCircle className="text-sm" /> Complete Profile
         </button>
-
       </div>
-
     </div>
   );
 }

@@ -23,24 +23,22 @@ function RiderHome() {
   const [selecting, setSelecting] = useState<"pickup" | "destination" | null>(null);
 
   return (
-    <div className="h-screen flex flex-col bg-gray-100">
-
+    <div className="h-screen flex flex-col bg-slate-50 overflow-hidden">
       <NavBar />
 
       <div className="relative flex-1">
+        {/* Map Selection Instruction Pill */}
         {selecting && (
-    <div className="absolute top-5 left-1/2 -translate-x-1/2 z-50">
-
-        <div className="bg-blue-600 text-white px-6 py-3 rounded-full shadow-xl">
-
-            {selecting === "pickup"
-                ? "📍 Click on the map to select Pickup"
+          <div className="absolute top-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
+            <div className="bg-blue-600/95 text-white px-6 py-3 rounded-full shadow-xl shadow-blue-600/30 border border-blue-400/30 text-xs sm:text-sm font-bold flex items-center gap-2 backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              {selecting === "pickup"
+                ? "📍 Click on the map to select Pickup location"
                 : "📍 Click on the map to select Destination"}
+            </div>
+          </div>
+        )}
 
-        </div>
-
-    </div>
-)}
         <GoogleMapView
           pickup={pickup}
           destination={destination}
@@ -51,9 +49,7 @@ function RiderHome() {
           setEncodedPolyline={setEncodedPolyline}
         />
 
-        {step === "welcome" && (
-          <WelcomeCard setStep={setStep} />
-        )}
+        {step === "welcome" && <WelcomeCard setStep={setStep} />}
 
         {step === "publish" && (
           <PublishRideCard
@@ -67,9 +63,7 @@ function RiderHome() {
             encodedPolyline={encodedPolyline}
           />
         )}
-
       </div>
-
     </div>
   );
 }
