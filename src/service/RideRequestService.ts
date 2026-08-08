@@ -39,3 +39,7 @@ export const getMyRideRequestsForDriver = async () => {
   const response = await RideRequestApis.getMyRideRequestsForDriver();
   return response.data;
 };
+export const getPassengerRideHistory = async () => {
+  const response = await RideRequestApis.getPassengerRideHistory();
+  return response.data;
+};

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-function Profile() {
+function CreateProfile() {
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
 
@@ -74,4 +74,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default CreateProfile;

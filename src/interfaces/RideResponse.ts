@@ -1,4 +1,5 @@
 import type { Location } from "./Location";
+import type { PassengerProfile } from "./PassengerProfile";
 
 export interface RideResponse {
   rideId: number;
@@ -31,4 +32,6 @@ export interface RideResponse {
   createdAt: string;
 
   updatedAt: string;
+
+  passengerProfile: PassengerProfile | null;
 }

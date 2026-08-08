@@ -1,4 +1,6 @@
-export interface VehicleSummary {
+export interface Vehicle {
+
+    vehicleNumber: string;
 
     vehicleType: string;
 
@@ -7,4 +9,5 @@ export interface VehicleSummary {
     model: string;
 
     color: string;
+
 }

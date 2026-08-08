@@ -188,7 +188,7 @@ function SearchResults() {
       </p>
 
       <button
-        onClick={() => navigate("/passengerdashboard")}
+        onClick={() => navigate("/dashboard")}
         className="w-full mt-5 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold flex justify-center items-center gap-2"
       >
 

@@ -208,13 +208,19 @@ function SearchRideCard({
           </div>
 
           <button
-            onClick={() =>
-              setSelecting("pickup")
-            }
-            className="mt-2 text-sm text-blue-600 font-medium"
-          >
-            📍 Select from Map
-          </button>
+    type="button"
+    disabled={selecting === "pickup"}
+    onClick={() => setSelecting("pickup")}
+    className={`mt-2 text-sm font-medium ${
+        selecting === "pickup"
+            ? "text-gray-400 cursor-not-allowed"
+            : "text-blue-600 hover:text-blue-700"
+    }`}
+>
+    {selecting === "pickup"
+        ? "📍 Click on map..."
+        : "📍 Select from Map"}
+</button>
 
         </div>
 
@@ -274,13 +280,19 @@ function SearchRideCard({
           </div>
 
           <button
-            onClick={() =>
-              setSelecting("destination")
-            }
-            className="mt-2 text-sm text-blue-600 font-medium"
-          >
-            📍 Select from Map
-          </button>
+    type="button"
+    disabled={selecting === "destination"}
+    onClick={() => setSelecting("destination")}
+    className={`mt-2 text-sm font-medium ${
+        selecting === "destination"
+            ? "text-gray-400 cursor-not-allowed"
+            : "text-blue-600 hover:text-blue-700"
+    }`}
+>
+    {selecting === "destination"
+        ? "📍 Click on map..."
+        : "📍 Select from Map"}
+</button>
 
         </div>
 

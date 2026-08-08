@@ -38,3 +38,10 @@ export const hasActiveRide = () => {
 export const getLiveRide = (rideId: number) =>{
     return api.get(`/rides/live/${rideId}`);
 };
+export const updateDriverLocation = (latitude: number,longitude: number) => {
+  return  api.post("/rides/location", { latitude, longitude,});
+
+};
+export const updatePassengerLocation = (latitude: number,longitude: number) => {
+  return  api.post("/rides/passenger/location", { latitude, longitude,});
+};

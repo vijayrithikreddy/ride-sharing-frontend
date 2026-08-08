@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaSignOutAlt, FaUser, FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { updateUserMode } from "../service/UserService";
 
 function NavBar() {
-  const {userType} = useContext(AuthContext);
+  const navigate =  useNavigate();
   const [showMenu, setShowMenu] = useState(false);
+  const {logout} = useContext(AuthContext);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -36,11 +38,14 @@ function NavBar() {
           RideShare
         </h1>
 
-        <button className="text-white font-medium hover:text-blue-100 hover:underline decoration-2 underline-offset-4 transition duration-300">
+        <button className="text-white font-medium hover:text-blue-100 hover:underline decoration-2 underline-offset-4 transition duration-300 cursor-pointer" onClick={() => navigate("/home")}>
           Home
         </button>
+        <button className="text-white font-medium hover:text-blue-100 hover:underline decoration-2 underline-offset-4 transition duration-300 cursor-pointer" onClick={() => navigate("/dashboard")}>
+          DashBoard
+        </button>
 
-        <button className="text-white font-medium hover:text-blue-100 hover:underline decoration-2 underline-offset-4 transition duration-300">
+        <button className="text-white font-medium hover:text-blue-100 hover:underline decoration-2 underline-offset-4 transition duration-300" onClick={() => navigate("/my-rides")}>
           My Rides
         </button>
       </div>
@@ -48,11 +53,21 @@ function NavBar() {
       {/* Right Section */}
       <div className="flex items-center gap-5">
        {localStorage.getItem("userType") === "RIDER" ? (
-  <button className="bg-white text-blue-600 font-semibold px-6 py-1 rounded-lg hover:bg-blue-50 transition">
+  <button className="bg-white text-blue-600 font-semibold px-6 py-1 rounded-lg hover:bg-blue-50 transition" onClick={() =>{
+    localStorage.setItem("userType","PASSENGER");
+    navigate("/home")
+    updateUserMode("PASSENGER")
+    window.location.reload();
+  }}>
     Switch to Passenger
   </button>
 ) : (
-  <button className="bg-white text-blue-600 font-semibold px-6 py-1 rounded-lg hover:bg-blue-50 transition">
+  <button className="bg-white text-blue-600 font-semibold px-6 py-1 rounded-lg hover:bg-blue-50 transition" onClick={() => {
+    localStorage.setItem("userType","RIDER")
+    navigate("/home")
+    updateUserMode("RIDER");
+    window.location.reload();
+  }}>
     Switch to Rider
   </button>
 )}
@@ -79,7 +94,7 @@ function NavBar() {
             <button
               onClick={() => {
                 setShowMenu(false);
-                // navigate("/profile");
+                navigate("/profile");
               }}
               className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-100 transition"
             >

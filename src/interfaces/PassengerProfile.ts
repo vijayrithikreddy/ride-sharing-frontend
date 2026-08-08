@@ -6,6 +6,8 @@ export interface PassengerProfile{
 
     lastName:string;
 
+    phoneNumber: string;
+
     profilePictureUrl:string;
 
 }

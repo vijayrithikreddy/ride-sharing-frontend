@@ -1,5 +1,5 @@
 import React from "react";
-import type { UserProfileDto } from "./Profile";
+import type { UserProfileDto } from "./CreateProfile";
 import DefaultAvatar from "../images/defaultavatar.png";
 
 interface ProfileReviewProps {
