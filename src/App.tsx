@@ -30,33 +30,33 @@ function App() {
 
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>
-          <Route path="/home" element={<Home/>} />
+          <Route path="/home" element={<Home />} />
           <Route path="/createprofile" element={<Profile />} />
 
           <Route path="/roleselection" element={<RoleSelection />} />
 
           <Route path="/dashboard" element={<DashBoard />} />
           <Route
-    path="/profile"
-    element={<ProfilePage />}
-/>
+            path="/profile"
+            element={<ProfilePage />}
+          />
 
           <Route
             path="/search-results"
             element={<SearchResults />}
-            
+
           />
-          
+
           <Route
-    path="/live/:rideId"
-    element={<LiveRide />}
-      />
-      <Route
-    path="/my-rides"
-    element={<MyRides />}
-/>
+            path="/live/:rideId"
+            element={<LiveRide />}
+          />
+          <Route
+            path="/my-rides"
+            element={<MyRides />}
+          />
         </Route>
-          
+
       </Routes>
     </BrowserRouter>
   );

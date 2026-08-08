@@ -1,6 +1,7 @@
 import * as RideApi from "../apis/RideApis";
 
 import type { CreateRideRequest } from "../interfaces/CreateRideRequest";
+import type { SearchRideRequest } from "../interfaces/SearchRideRequest";
 
 
 export const publishRide = async (request: CreateRideRequest) => {

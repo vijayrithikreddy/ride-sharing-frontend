@@ -41,7 +41,7 @@ function ProfilePage() {
           lastName: formData.lastName,
           phoneNumber: formData.phoneNumber,
           dateOfBirth: formData.dateOfBirth,
-          gender: formData.gender,
+          gender: formData.gender as "MALE" | "FEMALE" | "OTHER",
           occupation: formData.occupation,
           organization: formData.organization,
           bio: formData.bio,

@@ -3,7 +3,7 @@ import * as VehicleApis from "../apis/VehicleApis";
 import type { UpdateVehicleRequest } from "../interfaces/UpdateVehicleRequest";
 import type { Vehicle } from "../interfaces/Vehicle";
 
-export const addVehicle = async ( request): Promise<Vehicle> => {
+export const addVehicle = async (request: any): Promise<Vehicle> => {
 
     const response =
         await VehicleApis.addVehicle(request);

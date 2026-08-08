@@ -1,4 +1,3 @@
-import React from "react";
 import { FaCloudSun, FaRoad, FaTrafficLight, FaUsers } from "react-icons/fa";
 
 interface RideInsightsCardProps {

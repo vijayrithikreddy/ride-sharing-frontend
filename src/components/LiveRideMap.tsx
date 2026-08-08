@@ -113,16 +113,12 @@ function LiveRideMap({
     };
   }, [isLoaded]);
 
-  const [riderPath, setRiderPath] = useState<google.maps.LatLng[]>([]);
-  const [passengerPath, setPassengerPath] = useState<google.maps.LatLng[]>([]);
   const [remainingPath, setRemainingPath] = useState<google.maps.LatLng[]>([]);
   const [remainingPassengerPath, setRemainingPassengerPath] = useState<google.maps.LatLng[]>([]);
 
   const [animatedDriver, setAnimatedDriver] = useState<Location | null>(null);
   const [animatedPassenger, setAnimatedPassenger] = useState<Location | null>(null);
 
-  const driverCurrentIndex = useRef(0);
-  const passengerCurrentIndex = useRef(0);
   const [followTarget, setFollowTarget] = useState(true);
 
   const targetLocation = useMemo(() => {
@@ -141,9 +137,7 @@ function LiveRideMap({
     const rider = window.google.maps.geometry.encoding.decodePath(riderPolyline);
     const passenger = window.google.maps.geometry.encoding.decodePath(passengerPolyline);
 
-    setRiderPath(rider);
     setRemainingPath(rider);
-    setPassengerPath(passenger);
     setRemainingPassengerPath(passenger);
 
     const bounds = new window.google.maps.LatLngBounds();

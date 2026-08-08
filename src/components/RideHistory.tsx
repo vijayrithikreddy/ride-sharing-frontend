@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import * as RideService from "../service/RideService";
 import type { RideHistory as RideHistoryType } from "../interfaces/RideHistory";
 import RideHistoryCard from "../components/RideHistoryCard";
-import { FaRoute, FaCheckCircle, FaCalendarCheck } from "react-icons/fa";
+import { FaCheckCircle, FaCalendarCheck } from "react-icons/fa";
 
 function RideHistory() {
   const [loading, setLoading] = useState(true);

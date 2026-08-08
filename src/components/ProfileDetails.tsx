@@ -4,7 +4,7 @@ import DefaultAvatar from "../images/defaultavatar.png";
 import { FaCamera, FaGraduationCap, FaBriefcase, FaMotorcycle, FaBuilding, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 interface ProfileDetailsProps {
-  step: number;
+  step?: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   formData: UserProfileDto;
   setFormData: React.Dispatch<React.SetStateAction<UserProfileDto>>;
@@ -17,7 +17,6 @@ interface ProfileDetailsProps {
 }
 
 function ProfileDetails({
-  step,
   setStep,
   formData,
   setFormData,

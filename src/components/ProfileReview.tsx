@@ -4,18 +4,18 @@ import DefaultAvatar from "../images/defaultavatar.png";
 import { FaArrowLeft, FaCheckCircle, FaUser, FaPhone, FaCalendarAlt, FaVenusMars, FaBriefcase, FaBuilding, FaQuoteLeft } from "react-icons/fa";
 
 interface ProfileReviewProps {
-  step: number;
+  step?: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   formData: UserProfileDto;
   selectedImage: File | null;
-  preview: string;
+  preview?: string;
   handleSubmitProfile: () => void;
 }
 
 function ProfileReview({
-  step,
   setStep,
   formData,
+  selectedImage,
   preview,
   handleSubmitProfile,
 }: ProfileReviewProps) {
@@ -37,9 +37,13 @@ function ProfileReview({
       <div className="flex flex-col items-center justify-center mb-6 p-4 bg-gradient-to-b from-blue-50/50 to-white rounded-2xl border border-blue-100/60">
         <div className="relative">
           <img
-            src={preview || DefaultAvatar}
+            src={
+              selectedImage
+                ? URL.createObjectURL(selectedImage)
+                : preview || DefaultAvatar
+            }
             alt="Profile Preview"
-            className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
+            className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md mx-auto ring-4 ring-blue-50"
           />
           <div className="absolute bottom-0 right-0 bg-emerald-500 text-white p-1.5 rounded-full shadow" title="Ready">
             <FaCheckCircle className="text-xs" />

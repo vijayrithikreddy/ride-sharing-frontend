@@ -28,7 +28,7 @@ function SignUp() {
     try {
       setLoading(true);
 
-      const response = await AuthService.signup(formData);
+      const response = await AuthService.signup(formData as any);
       console.log(response);
 
       navigate(`/verifyOtp/${formData.email}`);

@@ -1,5 +1,5 @@
 import { FaFlagCheckered, FaPhoneAlt, FaArrowLeft, FaShieldAlt, FaTachometerAlt, FaClock, FaRoute } from "react-icons/fa";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LiveRideMap from "./LiveRideMap";
 import * as RideService from "../service/RideService";
