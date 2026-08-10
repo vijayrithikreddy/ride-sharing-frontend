@@ -96,7 +96,7 @@ function PersonalDetails({ step, setStep, formData, setFormData }: PersonalDetai
               id="phoneNumber"
               type="tel"
               name="phoneNumber"
-              placeholder="+91 9876543210"
+              placeholder="9876543210"
               className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-900 text-sm placeholder-gray-400 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all duration-200"
               value={formData.phoneNumber}
               onChange={handleChange}

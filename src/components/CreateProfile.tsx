@@ -6,11 +6,12 @@ import type { UserProfileDto } from "../interfaces/UserProfileDto";
 import { updateProfileData } from "../service/UserService";
 import { useNavigate } from "react-router-dom";
 import { FaMotorcycle, FaUser, FaIdCard, FaCheckCircle } from "react-icons/fa";
-import doodleBg from "../images/rideshare-doodle-bg.png";
+import toast from "react-hot-toast";
 
 function CreateProfile() {
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
+  const [submitting, setSubmitting] = useState(false);
 
   const [formData, setFormData] = useState<UserProfileDto>({
     firstName: "",
@@ -29,11 +30,22 @@ function CreateProfile() {
   const [preview, setPreview] = useState("");
 
   const handleSubmitProfile = async () => {
-    console.log("Profile Data:", formData);
-    console.log("Selected Image:", selectedImage);
+    try {
+      setSubmitting(true);
+      // Await backend API save operation
+      await updateProfileData(formData, selectedImage);
+      toast.success("Profile setup complete!");
 
-    updateProfileData(formData, selectedImage);
-    navigate("/roleselection");
+      navigate("/roleselection");
+    } catch (error: any) {
+      console.error("Failed to save profile to database:", error);
+      toast.error(
+        error.response?.data?.message ||
+          "Failed to save profile details. Please try again."
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -41,14 +53,7 @@ function CreateProfile() {
       {/* Decorative top blue banner */}
       <div className="w-full bg-gradient-to-r from-blue-700 via-blue-600 to-blue-800 py-8 px-6 text-white relative overflow-hidden shadow-md">
         {/* Doodle overlay */}
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `url(${doodleBg})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+        
 
         <div className="max-w-4xl mx-auto flex items-center justify-between relative z-10">
           <div className="flex items-center gap-3">
@@ -184,6 +189,7 @@ function CreateProfile() {
               formData={formData}
               selectedImage={selectedImage}
               preview={preview}
+              submitting={submitting}
               handleSubmitProfile={handleSubmitProfile}
             />
           )}

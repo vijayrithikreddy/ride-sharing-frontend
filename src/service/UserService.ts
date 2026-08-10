@@ -12,8 +12,8 @@ export const updateProfileData = async (
   selectedImage: File | null
 ) => {
   if (selectedImage) {
-    const imageUrl = await uploadPicture(selectedImage);
-    profileData.profilePictureUrl = imageUrl;
+    const response = await uploadPicture(selectedImage);
+    profileData.profilePictureUrl = response.imageUrl;
   }
 
   const response = await updateProfile(profileData);

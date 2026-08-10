@@ -6,8 +6,7 @@ import * as AuthService from "../service/AuthService";
 import { getProfileCompletedStatus } from "../service/UserService";
 import { AuthContext } from "../context/AuthContext";
 import * as RideService from "../service/RideService";
-
-
+import toast from "react-hot-toast";
 
 function Login() {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ function Login() {
     e.preventDefault();
 
     if (!email || !password) {
-      alert("Please enter email and password.");
+      toast.error("Please enter email and password.");
       return;
     }
 
@@ -35,11 +34,11 @@ function Login() {
         password,
       });
 
-
-      console.log(response);
-      const id = response.userResponse.id
+      const id = response.userResponse.id;
       localStorage.setItem("AUTH_USER_ID", id);
       login();
+
+      toast.success("Logged in successfully!");
 
       const profileCompleted = await getProfileCompletedStatus();
 
@@ -57,7 +56,7 @@ function Login() {
     } catch (error: any) {
       console.error(error);
 
-      alert(
+      toast.error(
         error.response?.data?.message ??
         "Invalid email or password."
       );
@@ -96,7 +95,7 @@ function Login() {
           </h1>
 
           <p className="text-blue-100 mt-4 text-lg leading-relaxed">
-            Share motorcycle rides with daily commuters. Split costs, skip traffic, and travel smarter.
+            Share motorcycle rides with daily commuters. Split costs, reduce traffic, and travel smarter.
           </p>
 
           {/* Feature pills */}
@@ -115,21 +114,7 @@ function Login() {
             </div>
           </div>
 
-          {/* Stats */}
-          <div className="flex justify-center gap-10 mt-10 pt-8 border-t border-white/15">
-            <div className="text-center">
-              <p className="text-2xl font-bold text-white">10K+</p>
-              <p className="text-blue-200 text-xs uppercase tracking-wider mt-1">Riders</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-white">50K+</p>
-              <p className="text-blue-200 text-xs uppercase tracking-wider mt-1">Rides</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-white">4.9★</p>
-              <p className="text-blue-200 text-xs uppercase tracking-wider mt-1">Rating</p>
-            </div>
-          </div>
+          
         </div>
       </div>
 

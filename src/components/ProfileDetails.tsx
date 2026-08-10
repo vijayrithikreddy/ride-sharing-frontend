@@ -9,7 +9,7 @@ interface ProfileDetailsProps {
   formData: UserProfileDto;
   setFormData: React.Dispatch<React.SetStateAction<UserProfileDto>>;
 
-  selectedImage: File | null;
+  selectedImage?: File | null;
   setSelectedImage: React.Dispatch<React.SetStateAction<File | null>>;
 
   preview: string;
@@ -20,7 +20,6 @@ function ProfileDetails({
   setStep,
   formData,
   setFormData,
-  selectedImage,
   setSelectedImage,
   preview,
   setPreview,
@@ -56,9 +55,6 @@ function ProfileDetails({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log(formData);
-    console.log(selectedImage);
 
     setStep((prev) => prev + 1);
   };

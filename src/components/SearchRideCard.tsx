@@ -120,10 +120,7 @@ function SearchRideCard({
 
     try {
       setLoading(true);
-      console.log("Search Ride Request", request);
-
       const rides = await searchRides(request);
-      console.log(rides);
 
       navigate("/search-results", {
         state: {

@@ -10,6 +10,7 @@ import { FaRoute, FaMotorcycle, FaCalendarPlus } from "react-icons/fa";
 import RidePreviewMap from "./RidePreviewMap";
 import { useNavigate } from "react-router-dom";
 import WebSocketService from "../service/WebSocketService";
+import toast from "react-hot-toast";
 
 function RiderDashboard() {
   const navigate = useNavigate();
@@ -29,14 +30,12 @@ function RiderDashboard() {
 
     if (driverId) {
       WebSocketService.subscribe(`/topic/driver/${driverId}`, (event) => {
-        console.log("Driver Event:", event);
-
         switch (event.type) {
           case "RIDE_STARTED":
             navigate(`/live/${event.payload}`);
             break;
           default:
-            console.log("Unknown Driver Event:", event.type);
+            break;
         }
       });
     }
@@ -44,7 +43,6 @@ function RiderDashboard() {
     WebSocketService.subscribe(
       `/topic/rides/${activeRide.rideId}/requests`,
       (message) => {
-        console.log("WEBSOCKET JSON:", JSON.stringify(message, null, 2));
         setRequests((prev) => [...prev, message.payload]);
       }
     );
@@ -62,14 +60,23 @@ function RiderDashboard() {
       console.error("Failed to load ride requests", error);
     }
   };
-
   const handleAccept = async (requestId: number) => {
-    await RideRequestService.acceptRideRequest(requestId);
-    window.location.reload();
+    try {
+      await RideRequestService.acceptRideRequest(requestId);
+      toast.success("Passenger request accepted!");
+      window.location.reload();
+    } catch (error) {
+      toast.error("Failed to accept request.");
+    }
   };
 
   const handleReject = async (requestId: number) => {
-    await RideRequestService.rejectRideRequest(requestId);
+    try {
+      await RideRequestService.rejectRideRequest(requestId);
+      toast.error("Passenger request rejected.");
+    } catch (error) {
+      toast.error("Failed to reject request.");
+    }
   };
 
   // Empty state if no active ride published
@@ -132,11 +139,9 @@ function RiderDashboard() {
               ride={activeRide}
               onStartRide={async () => {
                 await RideService.startRide();
-                console.log("Start Ride");
               }}
               onCancelRide={async () => {
                 await RideService.cancelRide();
-                console.log("Cancel Ride");
               }}
             />
           </div>

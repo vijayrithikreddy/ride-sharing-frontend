@@ -7,6 +7,7 @@ import type { RideSearchResponse } from "../interfaces/RideSearchResponse";
 import * as RideRequestService from "../service/RideRequestService";
 import type { CreatePassengerRideRequest } from "../interfaces/CreatePassengerRideRequest";
 import { FaArrowRight, FaArrowLeft, FaRoute, FaSearch, FaCheckCircle } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 function SearchResults() {
   const navigate = useNavigate();
@@ -33,8 +34,10 @@ function SearchResults() {
       });
 
       setRequestedRideIds((prev) => [...prev, ride.rideId]);
-    } catch (error) {
+      toast.success("Ride request sent to driver!");
+    } catch (error: any) {
       console.error(error);
+      toast.error(error.response?.data?.message || "Failed to send ride request.");
     }
   };
 

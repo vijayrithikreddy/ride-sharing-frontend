@@ -6,6 +6,7 @@ import * as RideService from "../service/RideService";
 import type { LiveRideResponse } from "../interfaces/LiveRideResponse";
 import type { Location } from "../interfaces/Location";
 import WebSocketService from "../service/WebSocketService";
+import toast from "react-hot-toast";
 
 function getDistanceInMeters(
   lat1: number,
@@ -142,7 +143,6 @@ function LiveRide() {
     WebSocketService.connect();
 
     WebSocketService.subscribe(`/topic/live/${ride.rideId}`, (event) => {
-      console.log("Live Event:", event);
 
       if (event.type === "LIVE_LOCATION") {
         setDriverLocation(event.payload.driverLocation);
@@ -227,12 +227,13 @@ function LiveRide() {
       }
     );
   }, [driverLocation, ride]);
-
   const completeRide = async () => {
     try {
       await RideService.completeRide();
-    } catch (error) {
+      toast.success("Ride completed successfully!");
+    } catch (error: any) {
       console.error(error);
+      toast.error("Failed to complete ride.");
     }
   };
 

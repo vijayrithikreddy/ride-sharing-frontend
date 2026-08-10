@@ -1,4 +1,3 @@
-import React from "react";
 import type { UserProfileDto } from "../interfaces/UserProfileDto";
 import DefaultAvatar from "../images/defaultavatar.png";
 import { FaArrowLeft, FaCheckCircle, FaUser, FaPhone, FaCalendarAlt, FaVenusMars, FaBriefcase, FaBuilding, FaQuoteLeft } from "react-icons/fa";
@@ -9,6 +8,7 @@ interface ProfileReviewProps {
   formData: UserProfileDto;
   selectedImage: File | null;
   preview?: string;
+  submitting?: boolean;
   handleSubmitProfile: () => void;
 }
 
@@ -17,6 +17,7 @@ function ProfileReview({
   formData,
   selectedImage,
   preview,
+  submitting = false,
   handleSubmitProfile,
 }: ProfileReviewProps) {
   const decreaseStep = () => {
@@ -135,18 +136,29 @@ function ProfileReview({
       <div className="flex items-center justify-between mt-6">
         <button
           type="button"
+          disabled={submitting}
           onClick={decreaseStep}
-          className="px-5 py-3 border border-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 hover:border-gray-300 flex items-center gap-2 transition-all duration-200"
+          className="px-5 py-3 border border-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 hover:border-gray-300 flex items-center gap-2 transition-all duration-200 disabled:opacity-50"
         >
           <FaArrowLeft className="text-xs" /> Back
         </button>
 
         <button
           type="button"
+          disabled={submitting}
           onClick={handleSubmitProfile}
-          className="bg-emerald-600 text-white py-3 px-6 rounded-xl flex items-center justify-center gap-2 font-semibold hover:bg-emerald-700 active:scale-[0.98] transition-all duration-200 shadow-md shadow-emerald-600/25 hover:shadow-lg hover:shadow-emerald-600/30"
+          className="bg-emerald-600 text-white py-3 px-6 rounded-xl flex items-center justify-center gap-2 font-semibold hover:bg-emerald-700 active:scale-[0.98] transition-all duration-200 shadow-md shadow-emerald-600/25 hover:shadow-lg hover:shadow-emerald-600/30 disabled:bg-gray-400 disabled:shadow-none"
         >
-          <FaCheckCircle className="text-sm" /> Complete Profile
+          {submitting ? (
+            <>
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              Saving Profile...
+            </>
+          ) : (
+            <>
+              <FaCheckCircle className="text-sm" /> Complete Profile
+            </>
+          )}
         </button>
       </div>
     </div>

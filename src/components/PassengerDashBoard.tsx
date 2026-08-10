@@ -7,6 +7,7 @@ import WebSocketService from "../service/WebSocketService";
 import type { RequestRideResponse } from "../interfaces/RequestRideResponse";
 import { useNavigate } from "react-router-dom";
 import { FaClock, FaRoute, FaCheckCircle, FaSearch } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 function PassengerDashboard() {
   const navigate = useNavigate();
@@ -35,10 +36,9 @@ function PassengerDashboard() {
     WebSocketService.subscribe(
       `/topic/passenger/${passengerId}`,
       (event) => {
-        console.log("Passenger Event:", event);
-
         switch (event.type) {
           case "REQUEST_ACCEPTED":
+            toast.success("Your ride request was accepted by the rider!");
             setPassengerRideRequests((oldRequests) =>
               oldRequests.map((request) =>
                 request.requestId === event.payload.requestId
@@ -49,6 +49,7 @@ function PassengerDashboard() {
             break;
 
           case "REQUEST_REJECTED":
+            toast.error("Your ride request was declined.");
             setPassengerRideRequests((oldRequests) =>
               oldRequests.filter(
                 (request) => request.requestId !== event.payload.requestId
@@ -60,7 +61,7 @@ function PassengerDashboard() {
             break;
 
           default:
-            console.log("Unknown Event:", event.type);
+            break;
         }
       }
     );
@@ -99,9 +100,7 @@ function PassengerDashboard() {
     }
   };
 
-  const contactDriver = () => {
-    console.log("Contact Driver");
-  };
+  const contactDriver = () => {};
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-slate-50 flex overflow-hidden">

@@ -4,13 +4,14 @@ import { useNavigate } from "react-router-dom";
 import * as AuthService from "../service/AuthService";
 import doodleBg from "../images/rideshare-doodle-bg.png";
 
+import toast from "react-hot-toast";
+
 function SignUp() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    role: "ROLE_USER",
   });
 
   const [loading, setLoading] = useState(false);
@@ -21,21 +22,26 @@ function SignUp() {
     e.preventDefault();
 
     if (!formData.email || !formData.password) {
-      alert("Please enter email and password.");
+      toast.error("Please enter email and password.");
       return;
     }
 
     try {
       setLoading(true);
+      const signupData = {
+        email: formData.email,
+        password: formData.password,
+        role: "ROLE_USER",
+      };
 
-      const response = await AuthService.signup(formData as any);
-      console.log(response);
+      await AuthService.signup(signupData as any);
+      toast.success("Account created! Check your email for OTP.");
 
       navigate(`/verifyOtp/${formData.email}`);
     } catch (error: any) {
       console.error(error);
 
-      alert(
+      toast.error(
         error.response?.data?.message ??
           "Signup failed. Please try again."
       );
@@ -93,21 +99,8 @@ function SignUp() {
             </div>
           </div>
 
-          {/* Stats */}
-          <div className="flex justify-center gap-10 mt-10 pt-8 border-t border-white/15">
-            <div className="text-center">
-              <p className="text-2xl font-bold text-white">10K+</p>
-              <p className="text-blue-200 text-xs uppercase tracking-wider mt-1">Riders</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-white">50K+</p>
-              <p className="text-blue-200 text-xs uppercase tracking-wider mt-1">Rides</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-white">4.9★</p>
-              <p className="text-blue-200 text-xs uppercase tracking-wider mt-1">Rating</p>
-            </div>
-          </div>
+          
+          
         </div>
       </div>
 
@@ -174,26 +167,6 @@ function SignUp() {
                 />
               </div>
 
-              {/* Role */}
-              <div>
-                <label htmlFor="signup-role" className="block text-sm font-medium text-gray-700 mb-1.5">
-                  Select Role
-                </label>
-                <select
-                  id="signup-role"
-                  value={formData.role}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      role: e.target.value,
-                    })
-                  }
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-900 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all duration-200 cursor-pointer"
-                >
-                  <option value="ROLE_USER">User</option>
-                  <option value="ROLE_ADMIN">Admin</option>
-                </select>
-              </div>
 
               {/* Submit */}
               <button
