@@ -2,7 +2,7 @@ import type { UpdateVehicleRequest } from "../interfaces/UpdateVehicleRequest";
 import api from "./AxioConfig";
 
 
-export const addVehicle = (request) => {
+export const addVehicle = (request: any) => {
     return api.post("/vehicles/me",request);
 };
 

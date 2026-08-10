@@ -3,6 +3,7 @@ import { FaArrowRight, FaMotorcycle, FaShieldAlt, FaRoute } from "react-icons/fa
 import { useNavigate, useParams } from "react-router-dom";
 import * as AuthService from "../service/AuthService";
 import doodleBg from "../images/rideshare-doodle-bg.png";
+import toast from "react-hot-toast";
 
 function VerifyOtp() {
   const { email } = useParams<{ email: string }>();
@@ -66,7 +67,6 @@ function VerifyOtp() {
       }
     }
   };
-
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
@@ -74,6 +74,7 @@ function VerifyOtp() {
 
     if (!email) {
       setError("Email is missing.");
+      toast.error("Email is missing.");
       return;
     }
 
@@ -84,15 +85,17 @@ function VerifyOtp() {
       setError("");
 
       await AuthService.verifyOtp(email, otpCode);
+      toast.success("OTP verified successfully!");
 
       navigate("/login");
     } catch (error: any) {
       console.error(error);
 
-      setError(
+      const errorMsg =
         error.response?.data?.message ??
-          "Invalid OTP. Please try again."
-      );
+        "Invalid OTP. Please try again.";
+      setError(errorMsg);
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -102,13 +105,11 @@ function VerifyOtp() {
     if (!email) return;
 
     try {
-      // Uncomment after creating the backend API
-      // await AuthService.resendOtp(email);
-
       setTimeLeft(120);
       setOtp(["", "", "", "", "", ""]);
       inputRefs.current[0]?.focus();
       setError("");
+      toast.success("OTP resent successfully!");
     } catch (error) {
       console.error(error);
     }
@@ -160,22 +161,6 @@ function VerifyOtp() {
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/15 text-white text-sm">
               <FaMotorcycle className="text-blue-200 text-xs" />
               Moto Pooling
-            </div>
-          </div>
-
-          {/* Stats */}
-          <div className="flex justify-center gap-10 mt-10 pt-8 border-t border-white/15">
-            <div className="text-center">
-              <p className="text-2xl font-bold text-white">10K+</p>
-              <p className="text-blue-200 text-xs uppercase tracking-wider mt-1">Riders</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-white">50K+</p>
-              <p className="text-blue-200 text-xs uppercase tracking-wider mt-1">Rides</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-white">4.9★</p>
-              <p className="text-blue-200 text-xs uppercase tracking-wider mt-1">Rating</p>
             </div>
           </div>
         </div>

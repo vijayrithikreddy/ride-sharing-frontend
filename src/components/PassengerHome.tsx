@@ -11,15 +11,11 @@ function PassengerHome() {
   const [step, setStep] = useState<Step>("welcome");
 
   const [pickup, setPickup] = useState<Location | null>(null);
-
   const [destination, setDestination] = useState<Location | null>(null);
 
-  const [selecting, setSelecting] = useState<
-    "pickup" | "destination" | null
-  >(null);
+  const [selecting, setSelecting] = useState<"pickup" | "destination" | null>(null);
 
-  const [passengerEncodedPolyline, setPassengerEncodedPolyline] =
-    useState("" | null);
+  const [passengerEncodedPolyline, setPassengerEncodedPolyline] = useState<string | null>("");
 
   return (
     <div className="h-screen flex flex-col bg-slate-50 overflow-hidden">
@@ -48,9 +44,7 @@ function PassengerHome() {
           setEncodedPolyline={setPassengerEncodedPolyline}
         />
 
-        {step === "welcome" && (
-          <PassengerWelcomeCard setStep={setStep} />
-        )}
+        {step === "welcome" && <PassengerWelcomeCard setStep={setStep} />}
 
         {step === "search" && (
           <SearchRideCard
@@ -61,7 +55,7 @@ function PassengerHome() {
             setDestination={setDestination}
             selecting={selecting}
             setSelecting={setSelecting}
-            passengerEncodedPolyline={passengerEncodedPolyline}
+            passengerEncodedPolyline={passengerEncodedPolyline || ""}
           />
         )}
       </div>

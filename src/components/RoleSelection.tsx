@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { FaMotorcycle, FaUserFriends, FaGasPump, FaClock, FaRoute, FaShieldAlt, FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import * as UserService from "../service/UserService";

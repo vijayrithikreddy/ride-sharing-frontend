@@ -55,8 +55,6 @@ function RidePreviewMap({
     ) {
       return;
     }
-console.log("Rider Polyline:", riderPolyline);
-console.log("Passenger Polyline:", passengerPolyline);
     const rider =
       window.google.maps.geometry.encoding.decodePath(
         riderPolyline

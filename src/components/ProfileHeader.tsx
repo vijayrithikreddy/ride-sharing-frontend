@@ -1,5 +1,5 @@
 import React from "react";
-import { FaCamera, FaMotorcycle, FaUser, FaCheckCircle } from "react-icons/fa";
+import { FaCamera, FaMotorcycle, FaUser } from "react-icons/fa";
 import type { Profile } from "../interfaces/Profile";
 
 interface ProfileHeaderProps {

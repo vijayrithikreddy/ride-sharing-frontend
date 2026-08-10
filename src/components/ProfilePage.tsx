@@ -7,6 +7,7 @@ import PersonalInfoCard from "./ProfileInfo";
 import VehicleInfoCard from "./VehicleInfo";
 import NavBar from "./NavBar";
 import { FaEdit, FaSave, FaTimes } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 function ProfilePage() {
   const [loading, setLoading] = useState(true);
@@ -41,7 +42,7 @@ function ProfilePage() {
           lastName: formData.lastName,
           phoneNumber: formData.phoneNumber,
           dateOfBirth: formData.dateOfBirth,
-          gender: formData.gender,
+          gender: formData.gender as "MALE" | "FEMALE" | "OTHER",
           occupation: formData.occupation,
           organization: formData.organization,
           bio: formData.bio,
@@ -66,10 +67,10 @@ function ProfilePage() {
       setSelectedImage(null);
       setEditing(false);
 
-      alert("Profile updated successfully!");
+      toast.success("Profile updated successfully!");
     } catch (error) {
       console.error(error);
-      alert("Failed to update profile.");
+      toast.error("Failed to update profile.");
     } finally {
       setSaving(false);
     }

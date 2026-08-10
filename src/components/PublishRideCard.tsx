@@ -15,6 +15,7 @@ import { publishRide } from "../service/RideService.ts";
 import type { CreateRideRequest } from "../interfaces/CreateRideRequest.ts";
 import { RideContext } from "../context/RideContext.ts";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 interface PublishRideCardProps {
   setStep: React.Dispatch<
@@ -141,15 +142,14 @@ function PublishRideCard({
       departureTime,
       price: Number(price),
     };
-
     try {
-      setLoading(true);
-      console.log("Publish Ride Request", request);
       const response = await publishRide(request);
       setActiveRide(response);
+      toast.success("Ride published successfully!");
       navigate("/dashboard");
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      toast.error(error.response?.data?.message || "Failed to publish ride. Please try again.");
     } finally {
       setLoading(false);
     }

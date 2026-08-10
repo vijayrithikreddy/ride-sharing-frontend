@@ -3,22 +3,16 @@ import GoogleMapView from "./GoogleMapView";
 import NavBar from "./NavBar";
 import WelcomeCard from "./WelcomeCard";
 import PublishRideCard from "./PublishRideCard";
+import type { Location } from "../interfaces/Location";
 
 type Step = "welcome" | "publish";
-
-export interface Location {
-  address: string;
-  lat: number;
-  lng: number;
-}
 
 function RiderHome() {
   const [step, setStep] = useState<Step>("welcome");
 
   const [pickup, setPickup] = useState<Location | null>(null);
-
   const [destination, setDestination] = useState<Location | null>(null);
-  const [encodedPolyline, setEncodedPolyline] = useState("");
+  const [encodedPolyline, setEncodedPolyline] = useState<string | null>("");
 
   const [selecting, setSelecting] = useState<"pickup" | "destination" | null>(null);
 
@@ -60,7 +54,7 @@ function RiderHome() {
             setDestination={setDestination}
             selecting={selecting}
             setSelecting={setSelecting}
-            encodedPolyline={encodedPolyline}
+            encodedPolyline={encodedPolyline || ""}
           />
         )}
       </div>

@@ -1,4 +1,3 @@
-import DashBoard from "./RiderDashBoard";
 import PassengerHome from "./PassengerHome";
 import RiderHome from "./RiderHome";
 

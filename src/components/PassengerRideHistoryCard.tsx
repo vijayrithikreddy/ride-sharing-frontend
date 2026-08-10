@@ -1,4 +1,3 @@
-import React from "react";
 import {
   FaMotorcycle,
   FaCheckCircle,
@@ -8,10 +7,10 @@ import {
   FaRupeeSign,
   FaUserCircle,
 } from "react-icons/fa";
-import type { PassengerRideHistory } from "../interfaces/PassengerRideHistoryType";
+import type { PassengerRideHistoryType } from "../interfaces/PassengerRideHistoryType";
 
 interface PassengerRideHistoryCardProps {
-  ride: PassengerRideHistory;
+  ride: PassengerRideHistoryType;
 }
 
 function PassengerRideHistoryCard({ ride }: PassengerRideHistoryCardProps) {
@@ -114,7 +113,9 @@ function PassengerRideHistoryCard({ ride }: PassengerRideHistoryCardProps) {
             <span className="w-3 h-3 rounded-full bg-emerald-500 ring-4 ring-emerald-50 mt-1 flex-shrink-0" />
             <div>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Pickup</p>
-              <h3 className="font-semibold text-xs sm:text-sm text-gray-800">{ride.source.address}</h3>
+              <h3 className="font-semibold text-xs sm:text-sm text-gray-800">
+                {typeof ride.source === "string" ? ride.source : (ride.source as any)?.address}
+              </h3>
             </div>
           </div>
 
@@ -124,7 +125,9 @@ function PassengerRideHistoryCard({ ride }: PassengerRideHistoryCardProps) {
             <FaMapMarkerAlt className="text-rose-500 text-sm mt-0.5 flex-shrink-0" />
             <div>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Destination</p>
-              <h3 className="font-semibold text-xs sm:text-sm text-gray-800">{ride.destination.address}</h3>
+              <h3 className="font-semibold text-xs sm:text-sm text-gray-800">
+                {typeof ride.destination === "string" ? ride.destination : (ride.destination as any)?.address}
+              </h3>
             </div>
           </div>
         </div>

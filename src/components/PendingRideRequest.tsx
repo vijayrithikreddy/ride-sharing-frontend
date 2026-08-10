@@ -1,10 +1,8 @@
-import React from "react";
 import {
   FaUserCircle,
   FaMotorcycle,
   FaRoute,
   FaRupeeSign,
-  FaClock,
 } from "react-icons/fa";
 import type { RequestRideResponse } from "../interfaces/RequestRideResponse";
 

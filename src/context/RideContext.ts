@@ -9,4 +9,4 @@ interface RideContextType {
 
   refreshRide: () => Promise<void>;
 }
-export const RideContext = createContext<RideContextType>(null)
+export const RideContext = createContext<RideContextType>(null as any);

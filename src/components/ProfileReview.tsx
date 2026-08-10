@@ -1,22 +1,23 @@
-import React from "react";
 import type { UserProfileDto } from "../interfaces/UserProfileDto";
 import DefaultAvatar from "../images/defaultavatar.png";
 import { FaArrowLeft, FaCheckCircle, FaUser, FaPhone, FaCalendarAlt, FaVenusMars, FaBriefcase, FaBuilding, FaQuoteLeft } from "react-icons/fa";
 
 interface ProfileReviewProps {
-  step: number;
+  step?: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   formData: UserProfileDto;
   selectedImage: File | null;
-  preview: string;
+  preview?: string;
+  submitting?: boolean;
   handleSubmitProfile: () => void;
 }
 
 function ProfileReview({
-  step,
   setStep,
   formData,
+  selectedImage,
   preview,
+  submitting = false,
   handleSubmitProfile,
 }: ProfileReviewProps) {
   const decreaseStep = () => {
@@ -37,9 +38,13 @@ function ProfileReview({
       <div className="flex flex-col items-center justify-center mb-6 p-4 bg-gradient-to-b from-blue-50/50 to-white rounded-2xl border border-blue-100/60">
         <div className="relative">
           <img
-            src={preview || DefaultAvatar}
+            src={
+              selectedImage
+                ? URL.createObjectURL(selectedImage)
+                : preview || DefaultAvatar
+            }
             alt="Profile Preview"
-            className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
+            className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md mx-auto ring-4 ring-blue-50"
           />
           <div className="absolute bottom-0 right-0 bg-emerald-500 text-white p-1.5 rounded-full shadow" title="Ready">
             <FaCheckCircle className="text-xs" />
@@ -131,18 +136,29 @@ function ProfileReview({
       <div className="flex items-center justify-between mt-6">
         <button
           type="button"
+          disabled={submitting}
           onClick={decreaseStep}
-          className="px-5 py-3 border border-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 hover:border-gray-300 flex items-center gap-2 transition-all duration-200"
+          className="px-5 py-3 border border-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 hover:border-gray-300 flex items-center gap-2 transition-all duration-200 disabled:opacity-50"
         >
           <FaArrowLeft className="text-xs" /> Back
         </button>
 
         <button
           type="button"
+          disabled={submitting}
           onClick={handleSubmitProfile}
-          className="bg-emerald-600 text-white py-3 px-6 rounded-xl flex items-center justify-center gap-2 font-semibold hover:bg-emerald-700 active:scale-[0.98] transition-all duration-200 shadow-md shadow-emerald-600/25 hover:shadow-lg hover:shadow-emerald-600/30"
+          className="bg-emerald-600 text-white py-3 px-6 rounded-xl flex items-center justify-center gap-2 font-semibold hover:bg-emerald-700 active:scale-[0.98] transition-all duration-200 shadow-md shadow-emerald-600/25 hover:shadow-lg hover:shadow-emerald-600/30 disabled:bg-gray-400 disabled:shadow-none"
         >
-          <FaCheckCircle className="text-sm" /> Complete Profile
+          {submitting ? (
+            <>
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              Saving Profile...
+            </>
+          ) : (
+            <>
+              <FaCheckCircle className="text-sm" /> Complete Profile
+            </>
+          )}
         </button>
       </div>
     </div>

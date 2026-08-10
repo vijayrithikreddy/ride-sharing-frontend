@@ -38,9 +38,6 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-
-        console.log("Access Token Expired");
-
         const newAccessToken = await refresh();
 
         originalRequest.headers.Authorization =
@@ -49,9 +46,6 @@ api.interceptors.response.use(
         return api(originalRequest);
 
       } catch (err) {
-
-        console.log("Refresh Token Expired");
-
         localStorage.clear();
 
         if (window.location.pathname !== "/login") {

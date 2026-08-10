@@ -1,5 +1,5 @@
 import * as AuthApi from "../apis/AuthApis";
-import { saveAccessToken, removeToken, saveRefreshToken } from "./TokenService";
+import { saveAccessToken, saveRefreshToken } from "./TokenService";
 import type { LoginRequest } from "../interfaces/LoginRequest";
 import type { RegisterRequest } from "../interfaces/RegisterRequest";
 

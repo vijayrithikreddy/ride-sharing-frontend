@@ -1,12 +1,10 @@
-import { Client } from "@stomp/stompjs"; 
+import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client/dist/sockjs";
 import type { IMessage } from "@stomp/stompjs";
 
 class WebSocketService {
   private client: Client | null = null;
-
   private connected = false;
-
   private pendingSubscriptions: Array<() => void> = [];
 
   connect() {
@@ -16,26 +14,15 @@ class WebSocketService {
 
     this.client = new Client({
       webSocketFactory: () => new SockJS("http://localhost:8083/ws"),
-
       reconnectDelay: 5000,
-
-      debug: (msg) => {
-        console.log(msg);
-      },
-
+      debug: () => {},
       onConnect: () => {
-        console.log("✅ Connected to WebSocket");
-
         this.connected = true;
-
         this.pendingSubscriptions.forEach((subscribe) => subscribe());
-
         this.pendingSubscriptions = [];
       },
 
       onDisconnect: () => {
-        console.log("❌ Disconnected");
-
         this.connected = false;
       },
 
@@ -47,16 +34,11 @@ class WebSocketService {
     this.client.activate();
   }
 
-  subscribe(
-    destination: string,
-    callback: (message: any) => void
-  ) {
+  subscribe(destination: string, callback: (message: any) => void) {
     const subscribeAction = () => {
       this.client?.subscribe(destination, (message: IMessage) => {
         callback(JSON.parse(message.body));
       });
-
-      console.log("Subscribed :", destination);
     };
 
     if (this.connected) {
