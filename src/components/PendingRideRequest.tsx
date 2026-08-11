@@ -19,7 +19,7 @@ function PendingRideRequest({ ride, onCancel }: PendingRideRequestProps) {
         <div className="flex items-center gap-3.5">
           {ride.driverProfilePicture ? (
             <img
-              src={`http://localhost:8082${ride.driverProfilePicture}`}
+              src={`https://ride-sharing-platform-user.onrender.com${ride.driverProfilePicture}`}
               alt="Driver"
               className="h-14 w-14 rounded-2xl object-cover border-2 border-blue-100 flex-shrink-0"
             />

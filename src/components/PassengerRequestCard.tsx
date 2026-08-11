@@ -25,7 +25,7 @@ function PassengerRequestCard({
   onReject,
 }: PassengerRequestCardProps) {
   const profileUrl = request.passengerProfile.profilePictureUrl
-    ? `http://localhost:8082${request.passengerProfile.profilePictureUrl}`
+    ? `https://ride-sharing-platform-user.onrender.com${request.passengerProfile.profilePictureUrl}`
     : "";
 
   const departure = new Date(request.departureTime).toLocaleTimeString([], {
@@ -36,11 +36,10 @@ function PassengerRequestCard({
   return (
     <div
       onClick={onClick}
-      className={`bg-white rounded-2xl border transition-all duration-300 cursor-pointer overflow-hidden ${
-        expanded
-          ? "border-blue-500 shadow-xl ring-2 ring-blue-50"
-          : "border-gray-100 shadow-sm hover:shadow-md"
-      }`}
+      className={`bg-white rounded-2xl border transition-all duration-300 cursor-pointer overflow-hidden ${expanded
+        ? "border-blue-500 shadow-xl ring-2 ring-blue-50"
+        : "border-gray-100 shadow-sm hover:shadow-md"
+        }`}
     >
       {/* Header */}
       <div className="p-4 sm:p-5 flex justify-between items-center">
@@ -102,9 +101,8 @@ function PassengerRequestCard({
 
       {/* Expanded Route Section */}
       <div
-        className={`overflow-hidden transition-all duration-300 ${
-          expanded ? "max-h-[300px] border-t border-gray-100 bg-gray-50/50" : "max-h-0"
-        }`}
+        className={`overflow-hidden transition-all duration-300 ${expanded ? "max-h-[300px] border-t border-gray-100 bg-gray-50/50" : "max-h-0"
+          }`}
       >
         <div className="p-5 space-y-3">
           <div className="flex items-start gap-2.5">

@@ -2,6 +2,8 @@ import React from "react";
 import { FaCamera, FaMotorcycle, FaUser } from "react-icons/fa";
 import type { Profile } from "../interfaces/Profile";
 
+import DefaultAvatar from "../images/defaultavatar.png";
+
 interface ProfileHeaderProps {
   profile: Profile;
   editing: boolean;
@@ -18,8 +20,8 @@ function ProfileHeader({
   const avatarSrc = selectedImage
     ? URL.createObjectURL(selectedImage)
     : profile.profilePictureUrl
-    ? `http://localhost:8082${profile.profilePictureUrl}`
-    : "/images/default-profile.png";
+    ? `https://ride-sharing-platform-user.onrender.com${profile.profilePictureUrl}`
+    : DefaultAvatar;
 
   return (
     <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 text-center relative overflow-hidden">
