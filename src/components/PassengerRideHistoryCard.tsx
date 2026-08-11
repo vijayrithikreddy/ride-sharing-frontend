@@ -50,7 +50,7 @@ function PassengerRideHistoryCard({ ride }: PassengerRideHistoryCardProps) {
           <div className="flex items-center gap-4">
             {ride.driverProfilePicture ? (
               <img
-                src={`http://localhost:8082${ride.driverProfilePicture}`}
+                src={`https://ride-sharing-platform-user.onrender.com${ride.driverProfilePicture}`}
                 alt="Driver"
                 className="w-14 h-14 rounded-2xl object-cover border-2 border-blue-500 shadow-sm flex-shrink-0"
               />

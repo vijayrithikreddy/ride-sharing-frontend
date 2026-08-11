@@ -48,7 +48,7 @@ function ActiveRideCard({
         <div className="py-4 flex items-center gap-4">
           {ride.driverProfilePicture ? (
             <img
-              src={`http://localhost:8082${ride.driverProfilePicture}`}
+              src={`https://ride-sharing-platform-user.onrender.com${ride.driverProfilePicture}`}
               alt="Driver"
               className="w-14 h-14 rounded-2xl object-cover border-2 border-white/80 shadow-md"
             />

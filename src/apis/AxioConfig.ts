@@ -2,7 +2,7 @@ import axios from "axios";
 import { refresh } from "../service/AuthService";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "https://ride-sharing-platform-api.onrender.com/api",
   headers: {
     "Content-Type": "application/json",
   },

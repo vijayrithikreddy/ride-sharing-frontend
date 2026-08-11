@@ -47,7 +47,7 @@ function RideCard({
             <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-blue-500 flex-shrink-0">
               {ride.driverProfile.profilePictureUrl ? (
                 <img
-                  src={`http://localhost:8082${ride.driverProfile.profilePictureUrl}`}
+                  src={`https://ride-sharing-platform-user.onrender.com${ride.driverProfile.profilePictureUrl}`}
                   alt="Driver"
                   className="w-full h-full object-cover"
                 />
