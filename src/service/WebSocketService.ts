@@ -13,7 +13,7 @@ class WebSocketService {
     }
 
     this.client = new Client({
-      webSocketFactory: () => new SockJS("http://localhost:8083/ws"),
+      webSocketFactory: () => new SockJS(import.meta.env.VITE_WS_BASE_URL || "https://ride-sharing-platform-ride.onrender.com/ws"),
       reconnectDelay: 5000,
       debug: () => {},
       onConnect: () => {

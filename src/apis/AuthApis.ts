@@ -20,15 +20,15 @@ export const verifyOtp = (email: string, otp: string) =>
     }
   );
 
-  
-  export const refreshAccessToken = (
-    refreshToken: string
+
+export const refreshAccessToken = (
+  refreshToken: string
 ) => {
 
-    return api.post("http://localhost:8080/api/auth/refresh",
-        {
-            refreshToken,
-        }
-    );
+  return api.post("/auth/refresh",
+    {
+      refreshToken,
+    }
+  );
 
 };

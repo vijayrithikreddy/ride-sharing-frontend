@@ -53,7 +53,7 @@ function YourRideCard({
             <div className="flex items-center gap-4">
               {ride.passengerProfile?.profilePictureUrl ? (
                 <img
-                  src={`http://localhost:8082${ride.passengerProfile.profilePictureUrl}`}
+                  src={`https://ride-sharing-platform-user.onrender.com${ride.passengerProfile.profilePictureUrl}`}
                   alt="Passenger"
                   className="w-14 h-14 rounded-2xl object-cover border-2 border-white/80 shadow-md"
                 />
